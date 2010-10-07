@@ -1,0 +1,40 @@
+
+       __   _____     _   _      _ _          _ 
+      |  | |___  `,  | | | |_ _ (_) |_ ___ __| |
+      |  | ,---'  |  | |_| | ' \| |  _/ -_) _` |
+      |  | |  ,--´    \___/|_||_|_|\__\___\__,_|
+      |  '-'  |       ___         _       _
+       `-._.-´       | _ \_ _ ___| |_ ___| |_ _  _ _ __  ___
+                     |  _/ '_/ _ \  _/ _ \  _| || | '_ \/ -_)
+                     |_| |_| \___/\__\___/\__|\_, | .__/\___|
+                                              |__/|_|
+
+______________________________________________________________________
+
+          GENERIC SERVER-SIDE GOOGLE ANALYTICS PHP CLIENT
+                 http://code.google.com/p/php-ga
+______________________________________________________________________
+
+Implementation of a generic server-side Google Analytics client in PHP
+that implements nearly every parameter and tracking feature of the
+original GA Javascript client.
+
+We love Google Analytics and want to contribute to its community with
+this PHP client implementation. It is intended to be used stand-alone
+or in addition to an existing Javascript library implementation.
+
+Building this library involved days of documentation reading, googling
+and testing - therefore its source code is thorougly well-documented.
+
+Requires PHP 5.3 as namespaces and closures are used. Has no other
+dependencies and can be used independantly from any framework or
+whatsoever environment.
+
+----------------------------------------------------------------------
+  See project page for recent versions, additional documentation,
+  issues and todos: -> http://code.google.com/p/php-ga
+----------------------------------------------------------------------
+
+Made with love by United Prototype in Cologne, Germany.
+
+Disclaimer: Google Analytics is a registered trademark of Google Inc.
