@@ -35,7 +35,7 @@ use UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder;
 class TransactionRequest extends Request {
 	
 	/**
-	 * @var Transaction
+	 * @var \UnitedPrototype\GoogleAnalytics\Transaction
 	 */
 	protected $transaction;
 	
@@ -50,7 +50,7 @@ class TransactionRequest extends Request {
 	/**
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/ecommerce/Transaction.as#76
 	 * 
-	 * @return ParameterHolder
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildParameters() {
 		$p = parent::buildParameters();
@@ -71,8 +71,8 @@ class TransactionRequest extends Request {
 	 * The GA Javascript client doesn't send any visitor information for
 	 * e-commerce requests, so we don't either.
 	 * 
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildVisitorParameters(ParameterHolder $p) {
 		return $p;
@@ -82,22 +82,22 @@ class TransactionRequest extends Request {
 	 * The GA Javascript client doesn't send any custom variables for
 	 * e-commerce requests, so we don't either.
 	 * 
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildCustomVariablesParameter(ParameterHolder $p) {
 		return $p;
 	}
 	
 	/**
-	 * @return Transaction
+	 * @return \UnitedPrototype\GoogleAnalytics\Transaction
 	 */
 	public function getTransaction() {
 		return $this->transaction;
 	}
 	
 	/**
-	 * @param Transaction $transaction
+	 * @param \UnitedPrototype\GoogleAnalytics\Transaction $transaction
 	 */
 	public function setTransaction(Transaction $transaction) {
 		$this->transaction = $transaction;

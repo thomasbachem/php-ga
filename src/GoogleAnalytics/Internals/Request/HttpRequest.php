@@ -46,7 +46,7 @@ abstract class HttpRequest {
 	protected $type;
 	
 	/**
-	 * @var Config
+	 * @var \UnitedPrototype\GoogleAnalytics\Config
 	 */
 	protected $config;
 	
@@ -62,21 +62,21 @@ abstract class HttpRequest {
 	
 	
 	/**
-	 * @param Config $config
+	 * @param \UnitedPrototype\GoogleAnalytics\Config $config
 	 */
 	public function __construct(Config $config = null) {
 		$this->setConfig($config ? $config : new Config());
 	}
 	
 	/**
-	 * @return Config
+	 * @return \UnitedPrototype\GoogleAnalytics\Config
 	 */
 	public function getConfig() {
 		return $this->config;
 	}
 	
 	/**
-	 * @param Config $config
+	 * @param \UnitedPrototype\GoogleAnalytics\Config $config
 	 */
 	public function setConfig(Config $config) {
 		$this->config = $config;
@@ -134,7 +134,7 @@ abstract class HttpRequest {
 	}
 	
 	/**
-	 * @return ParameterHolder
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected abstract function buildParameters();
 	

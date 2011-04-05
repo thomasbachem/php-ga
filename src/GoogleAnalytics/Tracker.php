@@ -51,7 +51,7 @@ class Tracker {
 	/**
 	 * The configuration to use for this tracker instance
 	 * 
-	 * @var Config
+	 * @var \UnitedPrototype\GoogleAnalytics\Config
 	 */
 	protected $config;
 	
@@ -91,7 +91,7 @@ class Tracker {
 	/**
 	 * @param string $accountId
 	 * @param string $domainName
-	 * @param bool $allowHash
+	 * @param \UnitedPrototype\GoogleAnalytics\Config $config
 	 */
 	public function __construct($accountId, $domainName, Config $config = null) {
 		$this->setAccountId($accountId);
@@ -100,14 +100,14 @@ class Tracker {
 	}
 	
 	/**
-	 * @return Config
+	 * @return \UnitedPrototype\GoogleAnalytics\Config
 	 */
 	public function getConfig() {
 		return $this->config;
 	}	
 	
 	/**
-	 * @param Config $value
+	 * @param \UnitedPrototype\GoogleAnalytics\Config $value
 	 */
 	public function setConfig(Config $value) {
 		$this->config = $value;
@@ -163,7 +163,7 @@ class Tracker {
 	 * Equivalent of _setCustomVar() in GA Javascript client.
 	 * 
 	 * @link http://code.google.com/apis/analytics/docs/tracking/gaTrackingCustomVariables.html
-	 * @param CustomVariable $customVariable
+	 * @param \UnitedPrototype\GoogleAnalytics\CustomVariable $customVariable
 	 */
 	public function addCustomVariable(CustomVariable $customVariable) {
 		// Ensure that all required parameters are set
@@ -174,7 +174,7 @@ class Tracker {
 	}
 	
 	/**
-	 * @return CustomVariable[]
+	 * @return \UnitedPrototype\GoogleAnalytics\CustomVariable[]
 	 */
 	public function getCustomVariables() {
 		return $this->customVariables;
@@ -193,9 +193,9 @@ class Tracker {
 	 * Equivalent of _trackPageview() in GA Javascript client.
 	 * 
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiBasicConfiguration.html#_gat.GA_Tracker_._trackPageview
-	 * @param Page $page
-	 * @param Session $session
-	 * @param Visitor $visitor
+	 * @param \UnitedPrototype\GoogleAnalytics\Page $page
+	 * @param \UnitedPrototype\GoogleAnalytics\Session $session
+	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
 	 */
 	public function trackPageview(Page $page, Session $session, Visitor $visitor) {
 		$session->setTrackCount($session->getTrackCount() + 1);
@@ -212,9 +212,9 @@ class Tracker {
 	 * Equivalent of _trackEvent() in GA Javascript client.
 	 * 
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEventTracking.html#_gat.GA_EventTracker_._trackEvent
-	 * @param Event $event
-	 * @param Session $session
-	 * @param Visitor $visitor
+	 * @param \UnitedPrototype\GoogleAnalytics\Event $event
+	 * @param \UnitedPrototype\GoogleAnalytics\Session $session
+	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
 	 */
 	public function trackEvent(Event $event, Session $session, Visitor $visitor) {
 		// Ensure that all required parameters are set
@@ -231,15 +231,15 @@ class Tracker {
 	/**
 	 * Combines _addTrans(), _addItem() (indirectly) and _trackTrans() of GA Javascript client.
 	 * Although the naming of "_addTrans()" would suggest multiple possible transactions
-	 * per reust, there is just one allowed actually.
+	 * per request, there is just one allowed actually.
 	 * 
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEcommerce.html#_gat.GA_Tracker_._addTrans
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEcommerce.html#_gat.GA_Tracker_._addItem
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEcommerce.html#_gat.GA_Tracker_._trackTrans
 	 * 
-	 * @param Transaction $transaction
-	 * @param Session $session
-	 * @param Visitor $visitor
+	 * @param \UnitedPrototype\GoogleAnalytics\Transaction $transaction
+	 * @param \UnitedPrototype\GoogleAnalytics\Session $session
+	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
 	 */
 	public function trackTransaction(Transaction $transaction, Session $session, Visitor $visitor) {
 		// Ensure that all required parameters are set

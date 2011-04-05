@@ -40,17 +40,17 @@ use UnitedPrototype\GoogleAnalytics\Internals\X10;
 abstract class Request extends HttpRequest {
 	
 	/**
-	 * @var Tracker
+	 * @var \UnitedPrototype\GoogleAnalytics\Tracker
 	 */
 	protected $tracker;
 	
 	/**
-	 * @var Visitor
+	 * @var \UnitedPrototype\GoogleAnalytics\Visitor
 	 */
 	protected $visitor;
 	
 	/**
-	 * @var Session
+	 * @var \UnitedPrototype\GoogleAnalytics\Session
 	 */
 	protected $session;
 	
@@ -115,7 +115,7 @@ abstract class Request extends HttpRequest {
 	}
 	
 	/**
-	 * @return ParameterHolder
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildParameters() {		
 		$p = new ParameterHolder();
@@ -142,8 +142,8 @@ abstract class Request extends HttpRequest {
 	}
 	
 	/**
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildVisitorParameters(ParameterHolder $p) {
 		$p->utmul = strtolower($this->visitor->getLocale());
@@ -163,8 +163,8 @@ abstract class Request extends HttpRequest {
 	
 	/**
 	 * @link http://xahlee.org/js/google_analytics_tracker_2010-07-01_expanded.js line 575
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildCustomVariablesParameter(ParameterHolder $p) {
 		$customVars = $this->tracker->getCustomVariables();
@@ -196,8 +196,8 @@ abstract class Request extends HttpRequest {
 	
 	/**
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/core/GIFRequest.as#123
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildCookieParameter(ParameterHolder $p) {
 		$p->__utma  = $this->generateDomainHash() . '.';
@@ -238,42 +238,42 @@ abstract class Request extends HttpRequest {
 	}
 	
 	/**
-	 * @return Tracker
+	 * @return \UnitedPrototype\GoogleAnalytics\Tracker
 	 */
 	public function getTracker() {
 		return $this->tracker;
 	}
 	
 	/**
-	 * @param Tracker $tracker
+	 * @param \UnitedPrototype\GoogleAnalytics\Tracker $tracker
 	 */
 	public function setTracker(Tracker $tracker) {
 		$this->tracker = $tracker;
 	}
 	
 	/**
-	 * @return Visitor
+	 * @return \UnitedPrototype\GoogleAnalytics\Visitor
 	 */
 	public function getVisitor() {
 		return $this->visitor;
 	}
 	
 	/**
-	 * @param Visitor $visitor
+	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
 	 */
 	public function setVisitor(Visitor $visitor) {
 		$this->visitor = $visitor;
 	}
 	
 	/**
-	 * @return Session
+	 * @return \UnitedPrototype\GoogleAnalytics\Session
 	 */
 	public function getSession() {
 		return $this->session;
 	}
 	
 	/**
-	 * @param Session $session
+	 * @param \UnitedPrototype\GoogleAnalytics\Session $session
 	 */
 	public function setSession(Session $session) {
 		$this->session = $session;

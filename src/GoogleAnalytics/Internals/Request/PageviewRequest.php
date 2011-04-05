@@ -33,7 +33,7 @@ use UnitedPrototype\GoogleAnalytics\Page;
 class PageviewRequest extends Request {
 	
 	/**
-	 * @var Page
+	 * @var \UnitedPrototype\GoogleAnalytics\Page
 	 */
 	protected $page;
 	
@@ -46,7 +46,7 @@ class PageviewRequest extends Request {
 	}
 	
 	/**
-	 * @return ParameterHolder
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildParameters() {
 		$p = parent::buildParameters();
@@ -64,14 +64,14 @@ class PageviewRequest extends Request {
 	}
 	
 	/**
-	 * @return Page
+	 * @return \UnitedPrototype\GoogleAnalytics\Page
 	 */
 	public function getPage() {
 		return $this->page;
 	}
 	
 	/**
-	 * @param Page $page
+	 * @param \UnitedPrototype\GoogleAnalytics\Page $page
 	 */
 	public function setPage(Page $page) {
 		$this->page = $page;

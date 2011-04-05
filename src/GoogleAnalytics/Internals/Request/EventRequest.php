@@ -35,7 +35,7 @@ use UnitedPrototype\GoogleAnalytics\Internals\X10;
 class EventRequest extends Request {
 	
 	/**
-	 * @var Event
+	 * @var @var \UnitedPrototype\GoogleAnalytics\Event
 	 */
 	protected $event;
 	
@@ -72,7 +72,7 @@ class EventRequest extends Request {
 	/**
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/v4/Tracker.as#1503
 	 * 
-	 * @return ParameterHolder
+	 * @return @var \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildParameters() {
 		$p = parent::buildParameters();
@@ -103,14 +103,14 @@ class EventRequest extends Request {
 	}
 	
 	/**
-	 * @return Event
+	 * @return @var \UnitedPrototype\GoogleAnalytics\Event
 	 */
 	public function getEvent() {
 		return $this->event;
 	}
 	
 	/**
-	 * @param Event $event
+	 * @param @var \UnitedPrototype\GoogleAnalytics\Event $event
 	 */
 	public function setEvent(Event $event) {
 		$this->event = $event;

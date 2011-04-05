@@ -51,7 +51,7 @@ class Event {
 	protected $label;
 	
 	/**
-	 * @var string
+	 * @var int
 	 */
 	protected $value;
 	
@@ -60,7 +60,7 @@ class Event {
 	 * @param string $category
 	 * @param string $action
 	 * @param string $label
-	 * @param string $value
+	 * @param int $value
 	 */
 	public function __construct($category = null, $action = null, $label = null, $value = null) {
 		if($category !== null) $this->setCategory($category);
@@ -118,17 +118,17 @@ class Event {
 	}
 	
 	/**
-	 * @return string
+	 * @return int
 	 */
 	public function getValue() {
 		return $this->value;
 	}
 	
 	/**
-	 * @param string $value
+	 * @param int $value
 	 */
 	public function setValue($value) {
-		$this->value = $value;
+		$this->value = (int)$value;
 	}
 	
 }

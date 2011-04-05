@@ -102,7 +102,7 @@ class Transaction {
 	
 	/**
 	 * @see Transaction::addItem()
-	 * @var Item[]
+	 * @var \UnitedPrototype\GoogleAnalytics\Item[]
 	 */
 	protected $items = array();
 	
@@ -115,7 +115,7 @@ class Transaction {
 	
 	/**
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEcommerce.html#_gat.GA_Tracker_._addItem
-	 * @param Item $item
+	 * @param \UnitedPrototype\GoogleAnalytics\Item $item
 	 */
 	public function addItem(Item $item) {
 		// Associated items inherit the transaction's order ID
@@ -126,7 +126,7 @@ class Transaction {
 	}
 	
 	/**
-	 * @return Item[]
+	 * @return \UnitedPrototype\GoogleAnalytics\Item[]
 	 */
 	public function getItems() {
 		return $this->items;

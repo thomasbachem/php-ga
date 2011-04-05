@@ -80,7 +80,7 @@ class Visitor {
 	 * and "X-Forwarded-For" request header
 	 * 
 	 * @see Internals\ParameterHolder::$utmip
-	 * @see Internals\Request::$xForwardedFor
+	 * @see Internals\Request\HttpRequest::$xForwardedFor
 	 * @var string
 	 */
 	protected $ipAddress;
@@ -88,7 +88,7 @@ class Visitor {
 	/**
 	 * User agent string of the end user, will be mapped to "User-Agent" request header
 	 * 
-	 * @see Internals\Request::$userAgent
+	 * @see Internals\Request\HttpRequest::$userAgent
 	 * @var string
 	 */
 	protected $userAgent;

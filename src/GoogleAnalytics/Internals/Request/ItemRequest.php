@@ -35,7 +35,7 @@ use UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder;
 class ItemRequest extends Request {
 	
 	/**
-	 * @var Item
+	 * @var \UnitedPrototype\GoogleAnalytics\Item
 	 */
 	protected $item;
 	
@@ -50,7 +50,7 @@ class ItemRequest extends Request {
 	/**
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/ecommerce/Item.as#61
 	 * 
-	 * @return ParameterHolder
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildParameters() {
 		$p = parent::buildParameters();		
@@ -69,8 +69,8 @@ class ItemRequest extends Request {
 	 * The GA Javascript client doesn't send any visitor information for
 	 * e-commerce requests, so we don't either.
 	 * 
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildVisitorParameters(ParameterHolder $p) {
 		return $p;
@@ -80,22 +80,22 @@ class ItemRequest extends Request {
 	 * The GA Javascript client doesn't send any custom variables for
 	 * e-commerce requests, so we don't either.
 	 * 
-	 * @param ParameterHolder $p
-	 * @return ParameterHolder
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildCustomVariablesParameter(ParameterHolder $p) {
 		return $p;
 	}
 	
 	/**
-	 * @return Item
+	 * @return \UnitedPrototype\GoogleAnalytics\Item
 	 */
 	public function getItem() {
 		return $this->item;
 	}
 	
 	/**
-	 * @param Item $item
+	 * @param \UnitedPrototype\GoogleAnalytics\Item $item
 	 */
 	public function setItem(Item $item) {
 		$this->item = $item;
