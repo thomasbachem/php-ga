@@ -45,7 +45,7 @@ class Tracker {
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/changelog.html
 	 * @const string
 	 */
-	const VERSION = '4.7.2';
+	const VERSION = '4.9.1';
 	
 	
 	/**
