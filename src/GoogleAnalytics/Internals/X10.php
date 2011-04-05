@@ -224,6 +224,7 @@ class X10 {
 	protected function escapeExtensibleValue($value) {
 		$result = '';
 		
+		$value = (string)$value;
 		$length = strlen($value);
 		for($i = 0; $i < $length; $i++) {
 			$char = $value[$i];
