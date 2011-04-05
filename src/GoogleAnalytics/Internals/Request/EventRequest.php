@@ -94,7 +94,7 @@ class EventRequest extends Request {
 		}
 		
 		if($this->event->getValue() !== null) {
-			$x10->setKey(self::X10_EVENT_PROJECT_ID, self::X10_EVENT_VALUE_VALUE_NUM, $this->event->getValue());
+			$x10->setValue(self::X10_EVENT_PROJECT_ID, self::X10_EVENT_VALUE_VALUE_NUM, $this->event->getValue());
 		}
 		
 		$p->utme .= $x10->renderUrlString();
