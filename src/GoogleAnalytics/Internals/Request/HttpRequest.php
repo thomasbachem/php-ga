@@ -102,9 +102,17 @@ abstract class HttpRequest {
 	protected function buildHttpRequest() {
 		$parameters = $this->buildParameters();
 		
-		// http_build_query() does automatically skip all array entries
-		// with null values, exactly what we want here
-		$queryString = http_build_query($parameters->toArray(), '', '&');
+		// This constant is supported as the 4th argument of http_build_query()
+		// from PHP 5.3.6 on and will tell it to use rawurlencode() instead of urlencode()
+		// internally, see http://code.google.com/p/php-ga/issues/detail?id=3
+		if(defined('PHP_QUERY_RFC3986')) {
+			// http_build_query() does automatically skip all array entries
+			// with null values, exactly what we want here
+			$queryString = http_build_query($parameters->toArray(), '', '&', PHP_QUERY_RFC3986);
+		} else {
+			// Manually replace "+"s with "%20" for backwards-compatibility
+			$queryString = str_replace('+', '%20', http_build_query($parameters->toArray(), '', '&'));
+		}
 		// Mimic Javascript's encodeURIComponent() encoding for the query
 		// string just to be sure we are 100% consistent with GA's Javascript client
 		$queryString = Util::convertToUriComponentEncoding($queryString);
