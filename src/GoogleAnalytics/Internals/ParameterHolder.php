@@ -90,6 +90,14 @@ class ParameterHolder {
 	 */
 	public $aip;
 	
+	/**
+	 * Used for GA-internal statistical client function usage and error tracking,
+	 * not implemented in php-ga as of now, but here for documentation completeness.
+	 * @link http://glucik.blogspot.com/2011/02/utmu-google-analytics-request-parameter.html
+	 * @var string
+	 */
+	public $utmu;
+	
 	
 	// - - - - - - - - - - - - - - - - - Page parameters - - - - - - - - - - - - - - - - -
 	
