@@ -150,7 +150,8 @@ abstract class HttpRequest {
 	 * @param string $request
 	 * @return null|string|bool
 	 */
-	public function _send($request) {
+	public function _send() {
+		$request = $this->buildHttpRequest();
 		$response = null;
 		
 		// Do not actually send the request if endpoint host is set to null
@@ -191,8 +192,6 @@ abstract class HttpRequest {
 	 * or enqueues the request by registering a PHP shutdown function.
 	 */
 	public function fire() {
-		$request = $this->buildHttpRequest();
-		
 		if($this->config->getSendOnShutdown()) {
 			// This dumb variable assignment is needed as PHP prohibits using
 			// $this in closure use statements
@@ -200,11 +199,11 @@ abstract class HttpRequest {
 			// We use a closure here to retain the current values/states of
 			// this instance and $request (as the use statement will copy them
 			// into its own scope)
-			register_shutdown_function(function() use($instance, $request) {
-				$instance->_send($request);
+			register_shutdown_function(function() use($instance) {
+				$instance->_send();
 			});
 		} else {
-			$this->_send($request);
+			$this->_send();
 		}
 	}
 

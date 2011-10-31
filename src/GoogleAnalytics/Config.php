@@ -38,8 +38,11 @@ class Config {
 	
 	/**
 	 * Whether to just queue all requests on HttpRequest::fire() and actually send
-	 * them on script shutdown after all other tasks are done (so it effectively
-	 * doesn't affect app performance)
+	 * them on PHP script shutdown after all other tasks are done.
+	 * 
+	 * This has two advantages:
+	 * 1) It effectively doesn't affect app performance
+	 * 2) It can e.g. handle custom variables that were set after scheduling a request
 	 * 
 	 * @see Internals\Request\HttpRequest::fire()
 	 * @var bool
