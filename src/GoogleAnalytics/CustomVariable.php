@@ -43,11 +43,21 @@ class CustomVariable {
 	protected $index;
 	
 	/**
+	 * WATCH OUT: It's a known issue that GA will not decode URL-encoded characters
+	 * in custom variable names and values properly, so spaces will show up
+	 * as "%20" in the interface etc.
+	 * 
+	 * @link http://www.google.com/support/forum/p/Google%20Analytics/thread?tid=2cdb3ec0be32e078
 	 * @var string
 	 */
 	protected $name;
 	
 	/**
+	 * WATCH OUT: It's a known issue that GA will not decode URL-encoded characters
+	 * in custom variable names and values properly, so spaces will show up
+	 * as "%20" in the interface etc.
+	 * 
+	 * @link http://www.google.com/support/forum/p/Google%20Analytics/thread?tid=2cdb3ec0be32e078
 	 * @var mixed
 	 */
 	protected $value;
@@ -105,6 +115,7 @@ class CustomVariable {
 	}
 	
 	/**
+	 * @link http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/gaTrackingCustomVariables.html#usage
 	 * @param int $index
 	 */
 	public function setIndex($index) {
