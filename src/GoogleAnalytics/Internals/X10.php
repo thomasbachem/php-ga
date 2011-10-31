@@ -242,28 +242,30 @@ class X10 {
 	/**
 	 * Given a data array for a certain type, render its string encoding.
 	 * 
-	 * @param array data
+	 * @param array $data
 	 * @return string
 	 */
 	protected function renderDataType(array $data) {
 		$result = array();
 		
-		// X10 numeric indices start at 1
-		$length = count($data);
-		for($i = 1; $i <= $length; $i++) {
-			if(isset($data[$i])) {
+		$lastI = 0;
+		ksort($data, SORT_NUMERIC);
+		foreach($data as $i => $entry) {
+			if(isset($entry)) {
 				$str = '';
 				
 				// Check if we need to append the number. If the last number was
 				// outputted, or if this is the assumed minimum, then we don't.
-				if($i != $this->MINIMUM && !isset($data[$i - 1])) {
+				if($i != $this->MINIMUM && $i - 1 != $lastI) {
 					$str .= $i;
 					$str .= $this->DELIM_NUM_VALUE;
 				}
 	
-				$str .= $this->escapeExtensibleValue($data[$i]);
+				$str .= $this->escapeExtensibleValue($entry);
 				$result[] = $str;
 			}
+			
+			$lastI = $i;
 		}
 		
 		return $this->DELIM_BEGIN . implode($this->DELIM_SET, $result) . $this->DELIM_END;
