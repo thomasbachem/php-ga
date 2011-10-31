@@ -169,6 +169,11 @@ abstract class Request extends HttpRequest {
 	protected function buildCustomVariablesParameter(ParameterHolder $p) {
 		$customVars = $this->tracker->getCustomVariables();
 		if($customVars) {
+			if(count($customVars) > 5) {
+				// See http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/gaTrackingCustomVariables.html#usage
+				throw new Exception('The sum of all custom variables cannot exceed 5 in any given request.');
+			}
+			
 			$x10 = new X10();
 			
 			$x10->clearKey(self::X10_CUSTOMVAR_NAME_PROJECT_ID);
