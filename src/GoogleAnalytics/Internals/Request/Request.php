@@ -111,13 +111,22 @@ abstract class Request extends HttpRequest {
 		$this->setXForwardedFor($this->visitor->getIpAddress());
 		$this->setUserAgent($this->visitor->getUserAgent());
 		
+		// Increment session track counter for each request
+		$this->session->increaseTrackCount();
+		
+		// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/v4/Configuration.as?r=237#48
+		// and http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/eventTrackerGuide.html#implementationConsiderations
+		if($this->session->getTrackCount() > 500) {
+			throw new Exception('Google Analytics does not guarantee to process more than 500 requests per session.');
+		}
+		
 		return parent::buildHttpRequest();
 	}
 	
 	/**
 	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
-	protected function buildParameters() {		
+	protected function buildParameters() {
 		$p = new ParameterHolder();
 		
 		$p->utmac = $this->tracker->getAccountId();
@@ -133,6 +142,7 @@ abstract class Request extends HttpRequest {
 		// $p->utmip = $this->visitor->getIpAddress();
 		
 		$p->utmhid = $this->session->getSessionId();
+		$p->utms   = $this->session->getTrackCount();
 		
 		$p = $this->buildVisitorParameters($p);
 		$p = $this->buildCustomVariablesParameter($p);

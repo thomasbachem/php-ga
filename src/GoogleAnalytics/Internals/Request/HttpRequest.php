@@ -117,7 +117,15 @@ abstract class HttpRequest {
 		// string just to be sure we are 100% consistent with GA's Javascript client
 		$queryString = Util::convertToUriComponentEncoding($queryString);
 		
-		$r  = 'GET ' . $this->config->getEndpointPath() . '?' . $queryString . ' HTTP/1.0' . "\r\n";
+		// Recent versions of ga.js use HTTP POST requests if the query string is too long
+		$usePost = strlen($queryString) > 2036;
+		
+		if(!$usePost) {
+			$r = 'GET ' . $this->config->getEndpointPath() . '?' . $queryString . ' HTTP/1.0' . "\r\n";
+		} else {
+			// FIXME: The "/p" shouldn't be hardcoded here, instead we need a GET and a POST endpoint...
+			$r = 'POST /p' . $this->config->getEndpointPath() . ' HTTP/1.0' . "\r\n";
+		}
 		$r .= 'Host: ' . $this->config->getEndpointHost() . "\r\n";
 		
 		$r .= 'User-Agent: ' . str_replace(array("\n", "\r"), '', $this->userAgent) . "\r\n";
@@ -127,8 +135,18 @@ abstract class HttpRequest {
 		// but we include it nonetheless for the pure sake of correctness (and hope)
 		$r .= 'X-Forwarded-For: ' . str_replace(array("\n", "\r"), '', $this->xForwardedFor) . "\r\n";
 		
+		if($usePost) {
+			// Don't ask me why "text/plain", but ga.js says so :)
+			$r .= 'Content-Type: text/plain' . "\r\n";
+			$r .= 'Content-Length: ' . strlen($queryString) . "\r\n";
+		}
+		
 		$r .= 'Connection: close' . "\r\n";
 		$r .= "\r\n\r\n";
+		
+		if($usePost) {
+			$r .= $queryString;
+		}
 		
 		return $r;
 	}

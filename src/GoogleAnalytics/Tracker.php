@@ -45,7 +45,7 @@ class Tracker {
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/changelog.html
 	 * @const string
 	 */
-	const VERSION = '4.9.1';
+	const VERSION = '4.9.2';
 	
 	
 	/**
@@ -198,8 +198,6 @@ class Tracker {
 	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
 	 */
 	public function trackPageview(Page $page, Session $session, Visitor $visitor) {
-		$session->setTrackCount($session->getTrackCount() + 1);
-		
 		$request = new PageviewRequest($this->config);
 		$request->setPage($page);
 		$request->setSession($session);

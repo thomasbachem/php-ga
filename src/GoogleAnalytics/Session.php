@@ -48,10 +48,13 @@ class Session {
 	protected $sessionId;
 	
 	/**
-	 * The amount of pageviews that were tracked within this session already,
-	 * will be part of the "__utmb" cookie parameter
+	 * The amount of pageviews that were tracked within this session so far,
+	 * will be part of the "__utmb" cookie parameter.
+	 * 
+	 * Will get incremented automatically upon each request.
 	 * 
 	 * @see Internals\ParameterHolder::$__utmb
+	 * @see Internals\Request\Request::buildHttpRequest()
 	 * @var int
 	 */
 	protected $trackCount;
@@ -107,6 +110,13 @@ class Session {
 	 */
 	public function setTrackCount($trackCount) {
 		$this->trackCount = (int)$trackCount;
+	}
+	
+	/**
+	 * @param int $byAmount
+	 */
+	public function increaseTrackCount($byAmount = 1) {
+		$this->trackCount += $byAmount;
 	}
 	
 	/**

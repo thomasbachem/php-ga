@@ -66,6 +66,12 @@ class ParameterHolder {
 	public $utmt;
 	
 	/**
+	 * Contains the amount of requests done in this session. Added in ga.js v4.9.2.
+	 * @var int
+	 */
+	public $utms;
+	
+	/**
 	 * Unique ID (random number) generated for each GIF request
 	 * @var int
 	 */
