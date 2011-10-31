@@ -156,7 +156,9 @@ abstract class Request extends HttpRequest {
 	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
 	protected function buildVisitorParameters(ParameterHolder $p) {
-		$p->utmul = strtolower($this->visitor->getLocale());
+		// Ensure correct locale format, see https://developer.mozilla.org/en/navigator.language
+		$p->utmul = strtolower(str_replace('_', '-', $this->visitor->getLocale()));
+		
 		if($this->visitor->getFlashVersion() !== null) {
 			$p->utmfl = $this->visitor->getFlashVersion();
 		}
