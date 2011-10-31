@@ -146,7 +146,7 @@ abstract class Request extends HttpRequest {
 		
 		$p = $this->buildVisitorParameters($p);
 		$p = $this->buildCustomVariablesParameter($p);
-		$p = $this->buildCookieParameter($p);
+		$p = $this->buildCookieParameters($p);
 		
 		return $p;
 	}
@@ -216,15 +216,23 @@ abstract class Request extends HttpRequest {
 	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
 	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
 	 */
-	protected function buildCookieParameter(ParameterHolder $p) {
-		$p->__utma  = $this->generateDomainHash() . '.';
+	protected function buildCookieParameters(ParameterHolder $p) {
+		$domainHash = $this->generateDomainHash();
+		
+		$p->__utma  = $domainHash . '.';
 		$p->__utma .= $this->visitor->getUniqueId() . '.';
 		$p->__utma .= $this->visitor->getFirstVisitTime()->format('U') . '.';
 		$p->__utma .= $this->visitor->getPreviousVisitTime()->format('U') . '.';
 		$p->__utma .= $this->session->getStartTime()->format('U') . '.';
 		$p->__utma .= $this->visitor->getVisitCount();
 		
-		$p->utmhid = $this->session->getSessionId();
+		$p->__utmb  = $domainHash . '.';
+		$p->__utmb .= $this->session->getTrackCount() . '.';
+		// FIXME: What does "token" mean? I only encountered a value of 10 in my tests.
+		$p->__utmb .= 10 . '.';
+		$p->__utmb .= $this->session->getStartTime()->format('U');
+		
+		$p->__utmc = $domainHash;
 		
 		$cookies = array();
 		$cookies[] = '__utma=' . $p->__utma . ';';
