@@ -120,12 +120,12 @@ abstract class HttpRequest {
 		$r  = 'GET ' . $this->config->getEndpointPath() . '?' . $queryString . ' HTTP/1.0' . "\r\n";
 		$r .= 'Host: ' . $this->config->getEndpointHost() . "\r\n";
 		
-		$r .= 'User-Agent: ' . $this->userAgent . "\r\n";
+		$r .= 'User-Agent: ' . str_replace(array("\n", "\r"), '', $this->userAgent) . "\r\n";
 		
 		// Sadly "X-Fowarded-For" is not supported by GA so far,
 		// see e.g. http://www.google.com/support/forum/p/Google+Analytics/thread?tid=017691c9e71d4b24,
 		// but we include it nonetheless for the pure sake of correctness (and hope)
-		$r .= 'X-Forwarded-For: ' . $this->xForwardedFor . "\r\n";
+		$r .= 'X-Forwarded-For: ' . str_replace(array("\n", "\r"), '', $this->xForwardedFor) . "\r\n";
 		
 		$r .= 'Connection: close' . "\r\n";
 		$r .= "\r\n\r\n";
