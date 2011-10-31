@@ -56,6 +56,16 @@ class Config {
 	protected $fireAndForget = false;
 	
 	/**
+	 * Logging callback, registered via setLoggingCallback(). Will be fired
+	 * whenever a request gets sent out and receives the full HTTP request
+	 * as the first and the full HTTP response (or null if the "fireAndForget"
+	 * option or simulation mode are used) as the second argument.
+	 * 
+	 * @var \Closure
+	 */
+	protected $loggingCallback;
+	
+	/**
 	 * Seconds (float allowed) to wait until timeout when connecting to the
 	 * Google analytics endpoint host
 	 * 
@@ -65,7 +75,8 @@ class Config {
 	protected $requestTimeout = 1;
 	
 	/**
-	 * Google Analytics tracking request endpoint host
+	 * Google Analytics tracking request endpoint host. Can be set to null to
+	 * silently simulate (and log) requests without actually sending them.
 	 * 
 	 * @see Internals\Request\HttpRequest::send()
 	 * @var string
@@ -120,6 +131,20 @@ class Config {
 	}
 	
 	/**
+	 * @return \Closure|null
+	 */
+	public function getLoggingCallback() {
+		return $this->loggingCallback;
+	}
+	
+	/**
+	 * @param \Closure $callback
+	 */
+	public function setLoggingCallback(\Closure $callback) {
+		$this->loggingCallback = $callback;
+	}
+	
+	/**
 	 * @return float
 	 */
 	public function getRequestTimeout() {
@@ -134,14 +159,14 @@ class Config {
 	}
 	
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	public function getEndPointHost() {
 		return $this->endPointHost;
 	}
 	
 	/**
-	 * @param string $endPointHost
+	 * @param string|null $endPointHost
 	 */
 	public function setEndPointHost($endPointHost) {
 		$this->endPointHost = $endPointHost;

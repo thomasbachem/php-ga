@@ -153,28 +153,35 @@ abstract class HttpRequest {
 	public function _send($request) {
 		$response = null;
 		
-		$timeout = $this->config->getRequestTimeout();
-		
-		$socket = fsockopen($this->config->getEndpointHost(), 80, $errno, $errstr, $timeout);
-		if(!$socket) return false;
-		
-		if($this->config->getFireAndForget()) {
-			stream_set_blocking($socket, false);
-		}
-		
-		$timeoutS  = intval($timeout);
-		$timeoutUs = ($timeout - $timeoutS) * 100000;
-		stream_set_timeout($socket, $timeoutS, $timeoutUs);
-		
-		fwrite($socket, $request);
-		
-		if(!$this->config->getFireAndForget()) {
-			while(!feof($socket)) {
-				$response .= fgets($socket, 512);
+		// Do not actually send the request if endpoint host is set to null
+		if($this->config->getEndpointHost() !== null) {
+			$timeout = $this->config->getRequestTimeout();
+			
+			$socket = fsockopen($this->config->getEndpointHost(), 80, $errno, $errstr, $timeout);
+			if(!$socket) return false;
+			
+			if($this->config->getFireAndForget()) {
+				stream_set_blocking($socket, false);
 			}
+			
+			$timeoutS  = intval($timeout);
+			$timeoutUs = ($timeout - $timeoutS) * 100000;
+			stream_set_timeout($socket, $timeoutS, $timeoutUs);
+			
+			fwrite($socket, $request);
+			
+			if(!$this->config->getFireAndForget()) {
+				while(!feof($socket)) {
+					$response .= fgets($socket, 512);
+				}
+			}
+			
+			fclose($socket);
 		}
 		
-		fclose($socket);
+		if($loggingCallback = $this->config->getLoggingCallback()) {
+			$loggingCallback($request, $response);
+		}
 		
 		return $response;
 	}
