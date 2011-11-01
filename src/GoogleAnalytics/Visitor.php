@@ -62,9 +62,20 @@ class Visitor {
 	 * cookie parameter
 	 * 
 	 * @see Internals\ParameterHolder::$__utma
+	 * @see addSession
 	 * @var DateTime
 	 */
 	protected $previousVisitTime;
+	
+	/**
+	 * Time of the current visit of this user, will be part of the "__utma"
+	 * cookie parameter
+	 * 
+	 * @see Internals\ParameterHolder::$__utma
+	 * @see addSession
+	 * @var DateTime
+	 */
+	protected $currentVisitTime;
 	
 	/**
 	 * Amount of total visits by this user, will be part of the "__utma"
@@ -138,8 +149,11 @@ class Visitor {
 	 * Creates a new visitor without any previous visit information.
 	 */
 	public function __construct() {
-		$this->setFirstVisitTime(new DateTime());
-		$this->setPreviousVisitTime(new DateTime());
+		// ga.js sets all three timestamps to now for new visitors, so we do the same
+		$now = new DateTime();
+		$this->setFirstVisitTime($now);
+		$this->setPreviousVisitTime($now);
+		$this->setCurrentVisitTime($now);
 		
 		$this->setVisitCount(1);
 	}
@@ -196,6 +210,21 @@ class Visitor {
 	}
 	
 	/**
+	 * Updates the "previousVisitTime", "currentVisitTime" and "visitCount"
+	 * fields based on the given session object.
+	 * 
+	 * @param Session $session
+	 */
+	public function addSession(Session $session) {
+		$startTime = $session->getStartTime();
+		if($startTime != $this->currentVisitTime) {
+			$this->previousVisitTime = $this->currentVisitTime;
+			$this->currentVisitTime  = $startTime;
+			++$this->visitCount;
+		}
+	}
+	
+	/**
 	 * @param DateTime $value
 	 */
 	public function setFirstVisitTime(DateTime $value) {
@@ -221,6 +250,20 @@ class Visitor {
 	 */
 	public function getPreviousVisitTime() {
 		return $this->previousVisitTime;
+	}
+	
+	/**
+	 * @param DateTime $value
+	 */
+	public function setCurrentVisitTime(DateTime $value) {
+		$this->currentVisitTime = $value;
+	}
+	
+	/**
+	 * @return DateTime
+	 */
+	public function getCurrentVisitTime() {
+		return $this->currentVisitTime;
 	}
 	
 	/**

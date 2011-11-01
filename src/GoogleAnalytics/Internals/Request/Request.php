@@ -223,7 +223,7 @@ abstract class Request extends HttpRequest {
 		$p->__utma .= $this->visitor->getUniqueId() . '.';
 		$p->__utma .= $this->visitor->getFirstVisitTime()->format('U') . '.';
 		$p->__utma .= $this->visitor->getPreviousVisitTime()->format('U') . '.';
-		$p->__utma .= $this->session->getStartTime()->format('U') . '.';
+		$p->__utma .= $this->visitor->getCurrentVisitTime()->format('U') . '.';
 		$p->__utma .= $this->visitor->getVisitCount();
 		
 		$p->__utmb  = $domainHash . '.';
