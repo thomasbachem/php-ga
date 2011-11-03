@@ -134,6 +134,22 @@ class Config {
 	
 	
 	/**
+	 * @param array $properties
+	 */
+	public function __construct(array $properties = array()) {
+		foreach($properties as $property => $value) {
+			// PHP doesn't care about case in method names
+			$setterMethod = 'set' . $property;
+			
+			if(method_exists($this, $setterMethod)) {
+				$this->$setterMethod($value);
+			} else {
+				return Tracker::_raiseError('There is no setting "' . $property . '".', __METHOD__);
+			}
+		}
+	}
+	
+	/**
 	 * @return int See self::ERROR_SEVERITY_* constants
 	 */
 	public function getErrorSeverity() {
