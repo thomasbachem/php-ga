@@ -56,43 +56,33 @@ class X10 {
 	 */
 	protected $SET = array('k', 'v');
 	
-	// Delimiters for wrapping a set of values belonging to the same type.
-	
 	/**
+	 * Opening delimiter for wrapping a set of values belonging to the same type.
 	 * @var string
 	 */
 	protected $DELIM_BEGIN = '(';
 	
 	/**
+	 * Closing delimiter for wrapping a set of values belonging to the same type.
 	 * @var string
 	 */
 	protected $DELIM_END   = ')';
 	
-	// Delimiter between two consecutive num/value pairs.
-	
 	/**
+	 * Delimiter between two consecutive num/value pairs.
 	 * @var string
 	 */
 	protected $DELIM_SET = '*';
 	
-	// Delimiter between a num and its corresponding value.
-	
 	/**
+	 * Delimiter between a num and its corresponding value.
 	 * @var string
 	 */
 	protected $DELIM_NUM_VALUE = '!';
 	
-	// Escape character. We're only escaping ), ,(comma), and :, but
-	// we'll need an escape character as well, which we've chosen to be ~.
-	
 	/**
-	 * @var string
-	 */
-	protected $ESCAPE_CHAR = "'";
-	
-	// Mapping of escapable characters to their escaped forms.
-	
-	/**
+	 * Mapping of escapable characters to their escaped forms.
+	 * 
 	 * @var array
 	 */
 	protected $ESCAPE_CHAR_MAP = array(
