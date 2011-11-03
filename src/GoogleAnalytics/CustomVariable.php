@@ -30,8 +30,6 @@ namespace UnitedPrototype\GoogleAnalytics;
 
 use UnitedPrototype\GoogleAnalytics\Internals\Util;
 
-use InvalidArgumentException;
-
 /**
  * @link http://code.google.com/apis/analytics/docs/tracking/gaTrackingCustomVariables.html
  */
@@ -103,7 +101,7 @@ class CustomVariable {
 		// see http://code.google.com/apis/analytics/docs/tracking/gaTrackingCustomVariables.html#varTypes
 		// and http://xahlee.org/js/google_analytics_tracker_2010-07-01_expanded.js line 563
 		if(strlen(Util::encodeUriComponent($this->name . $this->value)) > 64) {
-			throw new InvalidArgumentException('Custom Variable combined name and value encoded length must not be larger than 64 bytes.');
+			Tracker::_raiseError('Custom Variable combined name and value encoded length must not be larger than 64 bytes.', __METHOD__);
 		}
 	}
 	
@@ -123,7 +121,7 @@ class CustomVariable {
 		// trick to allow for more of them which we could investigate at a later time (see
 		// http://analyticsimpact.com/2010/05/24/get-more-than-5-custom-variables-in-google-analytics/)
 		if($index < 1 || $index > 5) {
-			throw new InvalidArgumentException('Custom Variable index has to be between 1 and 5.');
+			Tracker::_raiseError('Custom Variable index has to be between 1 and 5.', __METHOD__);
 		}
 		
 		$this->index = (int)$index;
@@ -169,7 +167,7 @@ class CustomVariable {
 	 */
 	public function setScope($scope) {
 		if(!in_array($scope, array(self::SCOPE_PAGE, self::SCOPE_SESSION, self::SCOPE_VISITOR))) {
-			throw new InvalidArgumentException('Custom Variable scope has to be one of the CustomVariable::SCOPE_* constant values.');
+			Tracker::_raiseError('Custom Variable scope has to be one of the CustomVariable::SCOPE_* constant values.', __METHOD__);
 		}
 		
 		$this->scope = (int)$scope;

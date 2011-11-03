@@ -28,8 +28,6 @@
 
 namespace UnitedPrototype\GoogleAnalytics;
 
-use UnexpectedValueException;
-
 /**
  * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/ecommerce/Item.as
  */
@@ -89,7 +87,7 @@ class Item {
 	
 	public function validate() {
 		if($this->sku === null) {
-			throw new UnexpectedValueException('Items need to have a sku/product code defined.');
+			Tracker::_raiseError('Items need to have a sku/product code defined.', __METHOD__);
 		}
 	}
 	

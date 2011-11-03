@@ -117,7 +117,7 @@ abstract class Request extends HttpRequest {
 		// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/v4/Configuration.as?r=237#48
 		// and http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/eventTrackerGuide.html#implementationConsiderations
 		if($this->session->getTrackCount() > 500) {
-			throw new Exception('Google Analytics does not guarantee to process more than 500 requests per session.');
+			Tracker::_raiseError('Google Analytics does not guarantee to process more than 500 requests per session.', __METHOD__);
 		}
 		
 		return parent::buildHttpRequest();
@@ -183,7 +183,7 @@ abstract class Request extends HttpRequest {
 		if($customVars) {
 			if(count($customVars) > 5) {
 				// See http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/gaTrackingCustomVariables.html#usage
-				throw new Exception('The sum of all custom variables cannot exceed 5 in any given request.');
+				Tracker::_raiseError('The sum of all custom variables cannot exceed 5 in any given request.', __METHOD__);
 			}
 			
 			$x10 = new X10();

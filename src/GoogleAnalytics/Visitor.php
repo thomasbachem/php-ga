@@ -31,7 +31,6 @@ namespace UnitedPrototype\GoogleAnalytics;
 use UnitedPrototype\GoogleAnalytics\Internals\Util;
 
 use DateTime;
-use InvalidArgumentException;
 
 /**
  * You should serialize this object and store it in the user database to keep it
@@ -190,7 +189,7 @@ class Visitor {
 	 */
 	public function setUniqueId($value) {
 		if($value < 0 || $value > 0x7fffffff) {
-			throw new InvalidArgumentException('Visitor unique ID has to be a 32-bit integer between 0 and ' . 0x7fffffff . '.');
+			Tracker::_raiseError('Visitor unique ID has to be a 32-bit integer between 0 and ' . 0x7fffffff . '.', __METHOD__);
 		}
 		
 		$this->uniqueId = (int)$value;

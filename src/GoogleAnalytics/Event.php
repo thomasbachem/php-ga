@@ -28,8 +28,6 @@
 
 namespace UnitedPrototype\GoogleAnalytics;
 
-use UnexpectedValueException;
-
 /**
  * @link http://code.google.com/apis/analytics/docs/tracking/eventTrackerOverview.html
  */
@@ -71,7 +69,7 @@ class Event {
 	
 	public function validate() {
 		if($this->category === null || $this->action === null) {
-			throw new UnexpectedValueException('Events need at least to have a category and action defined.');
+			Tracker::_raiseError('Events need at least to have a category and action defined.', __METHOD__);
 		}
 	}
 	

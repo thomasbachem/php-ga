@@ -28,8 +28,6 @@
 
 namespace UnitedPrototype\GoogleAnalytics;
 
-use UnexpectedValueException;
-
 /**
  * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/ecommerce/Transaction.as
  */
@@ -109,7 +107,7 @@ class Transaction {
 	
 	public function validate() {
 		if(!$this->items) {
-			throw new UnexpectedValueException('Transactions need to consist of at least one item.');
+			Tracker::_raiseError('Transactions need to consist of at least one item.', __METHOD__);
 		}
 	}
 	

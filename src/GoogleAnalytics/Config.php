@@ -37,6 +37,32 @@ namespace UnitedPrototype\GoogleAnalytics;
 class Config {
 	
 	/**
+	 * How strict should errors get handled? After all, we do just do some
+	 * tracking stuff here, and errors shouldn't break an application's
+	 * functionality in production.
+	 * RECOMMENDATION: Exceptions during deveopment, warnings in production.
+	 * 
+	 * Assign any value of the self::ERROR_SEVERITY_* constants.
+	 * 
+	 * @see Tracker::_raiseError()
+	 * @var int
+	 */
+	protected $errorSeverity = self::ERROR_SEVERITY_EXCEPTIONS;
+	
+	/**
+	 * Ignore all errors completely.
+	 */
+	const ERROR_SEVERITY_SILENCE    = 0;
+	/**
+	 * Trigger PHP errors with a E_USER_WARNING error level.
+	 */
+	const ERROR_SEVERITY_WARNINGS   = 1;
+	/**
+	 * Throw UnitedPrototype\GoogleAnalytics\Exception exceptions.
+	 */
+	const ERROR_SEVERITY_EXCEPTIONS = 2;
+	
+	/**
 	 * Whether to just queue all requests on HttpRequest::fire() and actually send
 	 * them on PHP script shutdown after all other tasks are done.
 	 * 
@@ -77,6 +103,8 @@ class Config {
 	 */
 	protected $requestTimeout = 1;
 	
+	// FIXME: Add SSL support, https://ssl.google-analytics.com
+	
 	/**
 	 * Google Analytics tracking request endpoint host. Can be set to null to
 	 * silently simulate (and log) requests without actually sending them.
@@ -104,6 +132,20 @@ class Config {
 	 */
 	protected $anonymizeIpAddresses = false;
 	
+	
+	/**
+	 * @return int See self::ERROR_SEVERITY_* constants
+	 */
+	public function getErrorSeverity() {
+		return $this->errorSeverity;
+	}
+	
+	/**
+	 * @param int $errorSeverity See self::ERROR_SEVERITY_* constants
+	 */
+	public function setErrorSeverity($errorSeverity) {
+		$this->errorSeverity = $errorSeverity;
+	}
 	
 	/**
 	 * @return bool

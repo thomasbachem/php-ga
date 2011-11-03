@@ -28,8 +28,6 @@
 
 namespace UnitedPrototype\GoogleAnalytics;
 
-use InvalidArgumentException;
-
 class Page {
 	
 	/**
@@ -88,7 +86,7 @@ class Page {
 	 */
 	public function setPath($path) {
 		if($path && $path[0] != '/') {
-			throw new InvalidArgumentException('The page path should always start with a slash ("/").');
+			Tracker::_raiseError('The page path should always start with a slash ("/").', __METHOD__);
 		}
 		
 		$this->path = $path;

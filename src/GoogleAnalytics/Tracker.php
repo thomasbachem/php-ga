@@ -34,8 +34,6 @@ use UnitedPrototype\GoogleAnalytics\Internals\Request\EventRequest;
 use UnitedPrototype\GoogleAnalytics\Internals\Request\TransactionRequest;
 use UnitedPrototype\GoogleAnalytics\Internals\Request\ItemRequest;
 
-use InvalidArgumentException;
-
 class Tracker {
 	
 	/**
@@ -49,11 +47,11 @@ class Tracker {
 	
 	
 	/**
-	 * The configuration to use for this tracker instance
+	 * The configuration to use for all tracker instances.
 	 * 
 	 * @var \UnitedPrototype\GoogleAnalytics\Config
 	 */
-	protected $config;
+	protected static $config;
 	
 	/**
 	 * Google Analytics account ID, e.g. "UA-1234567-8", will be mapped to
@@ -94,23 +92,24 @@ class Tracker {
 	 * @param \UnitedPrototype\GoogleAnalytics\Config $config
 	 */
 	public function __construct($accountId, $domainName, Config $config = null) {
+		static::setConfig($config ? $config : new Config());
+		
 		$this->setAccountId($accountId);
 		$this->setDomainName($domainName);
-		$this->setConfig($config ? $config : new Config());
 	}
 	
 	/**
 	 * @return \UnitedPrototype\GoogleAnalytics\Config
 	 */
-	public function getConfig() {
-		return $this->config;
+	public static function getConfig() {
+		return static::$config;
 	}	
 	
 	/**
 	 * @param \UnitedPrototype\GoogleAnalytics\Config $value
 	 */
-	public function setConfig(Config $value) {
-		$this->config = $value;
+	public static function setConfig(Config $value) {
+		static::$config = $value;
 	}
 	
 	/**
@@ -118,7 +117,7 @@ class Tracker {
 	 */
 	public function setAccountId($value) {
 		if(!preg_match('/^UA-[0-9]*-[0-9]*$/', $value)) {
-			throw new InvalidArgumentException('"' . $value . '" is not a valid Google Analytics account ID.');
+			static::_raiseError('"' . $value . '" is not a valid Google Analytics account ID.', __METHOD__);
 		}
 		
 		$this->accountId = $value;
@@ -262,6 +261,33 @@ class Tracker {
 			$request->setVisitor($visitor);
 			$request->setTracker($this);
 			$request->fire();
+		}
+	}
+	
+	/**
+	 * For internal use only. Will trigger an error according to the current
+	 * Config::$errorSeverity setting.
+	 * 
+	 * @see Config::$errorSeverity
+	 * @param string $message
+	 * @param string $method
+	 */
+	public static function _raiseError($message, $method) {
+		$method = str_replace(__NAMESPACE__ . '\\', '', $method);
+		$message = $method . '(): ' . $message;
+		
+		$errorSeverity = isset(static::$config) ? static::$config->getErrorSeverity() : Config::ERROR_SEVERITY_EXCEPTIONS;
+		
+		switch($errorSeverity) {
+			case Config::ERROR_SEVERITY_SILENCE:
+				// Do nothing
+				break;
+			case Config::ERROR_SEVERITY_WARNINGS:
+				trigger_error($message, E_USER_WARNING);
+				break;
+			case Config::ERROR_SEVERITY_EXCEPTIONS:
+				throw new Exception($message);
+				break;
 		}
 	}
 	
