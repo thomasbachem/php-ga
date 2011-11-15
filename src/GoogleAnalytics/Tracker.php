@@ -89,11 +89,6 @@ class Tracker {
 	 */
 	protected $customVariables = array();
 	
-	/**
-	 * @var \UnitedPrototype\GoogleAnalytics\Campaign
-	 */
-	protected $campaign;
-	
 	
 	/**
 	 * @param string $accountId
@@ -195,25 +190,6 @@ class Tracker {
 	 */
 	public function removeCustomVariable($index) {
 		unset($this->customVariables[$index]);
-	}
-	
-	/**
-	 * @param \UnitedPrototype\GoogleAnalytics\Campaign $campaign
-	 */
-	public function setCampaign(Campaign $campaign = null) {
-		if($campaign) {
-			// Ensure that all required parameters are set
-			$campaign->validate();
-		}
-		
-		$this->campaign = $campaign;
-	}
-	
-	/**
-	 * @return \UnitedPrototype\GoogleAnalytics\Campaign|null
-	 */
-	public function getCampaign() {
-		return $this->campaign;
 	}
 	
 	/**
