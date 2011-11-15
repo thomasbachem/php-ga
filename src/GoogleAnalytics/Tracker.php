@@ -197,7 +197,7 @@ class Tracker {
 	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
 	 */
 	public function trackPageview(Page $page, Session $session, Visitor $visitor) {
-		$request = new PageviewRequest($this->config);
+		$request = new PageviewRequest(static::$config);
 		$request->setPage($page);
 		$request->setSession($session);
 		$request->setVisitor($visitor);
@@ -217,7 +217,7 @@ class Tracker {
 		// Ensure that all required parameters are set
 		$event->validate();
 		
-		$request = new EventRequest($this->config);
+		$request = new EventRequest(static::$config);
 		$request->setEvent($event);
 		$request->setSession($session);
 		$request->setVisitor($visitor);
@@ -242,7 +242,7 @@ class Tracker {
 		// Ensure that all required parameters are set
 		$transaction->validate();
 		
-		$request = new TransactionRequest($this->config);
+		$request = new TransactionRequest(static::$config);
 		$request->setTransaction($transaction);
 		$request->setSession($session);
 		$request->setVisitor($visitor);
@@ -255,7 +255,7 @@ class Tracker {
 			// Ensure that all required parameters are set
 			$item->validate();
 			
-			$request = new ItemRequest($this->config);
+			$request = new ItemRequest(static::$config);
 			$request->setItem($item);
 			$request->setSession($session);
 			$request->setVisitor($visitor);
