@@ -128,12 +128,16 @@ abstract class HttpRequest {
 		}
 		$r .= 'Host: ' . $this->config->getEndpointHost() . "\r\n";
 		
-		$r .= 'User-Agent: ' . str_replace(array("\n", "\r"), '', $this->userAgent) . "\r\n";
+		if($this->userAgent) {
+			$r .= 'User-Agent: ' . str_replace(array("\n", "\r"), '', $this->userAgent) . "\r\n";
+		}
 		
-		// Sadly "X-Fowarded-For" is not supported by GA so far,
-		// see e.g. http://www.google.com/support/forum/p/Google+Analytics/thread?tid=017691c9e71d4b24,
-		// but we include it nonetheless for the pure sake of correctness (and hope)
-		$r .= 'X-Forwarded-For: ' . str_replace(array("\n", "\r"), '', $this->xForwardedFor) . "\r\n";
+		if($this->xForwardedFor) {
+			// Sadly "X-Fowarded-For" is not supported by GA so far,
+			// see e.g. http://www.google.com/support/forum/p/Google+Analytics/thread?tid=017691c9e71d4b24,
+			// but we include it nonetheless for the pure sake of correctness (and hope)
+			$r .= 'X-Forwarded-For: ' . str_replace(array("\n", "\r"), '', $this->xForwardedFor) . "\r\n";
+		}
 		
 		if($usePost) {
 			// Don't ask me why "text/plain", but ga.js says so :)
