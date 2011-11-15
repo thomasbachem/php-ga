@@ -95,6 +95,11 @@ abstract class Request extends HttpRequest {
 	 */
 	const X10_CUSTOMVAR_SCOPE_PROJECT_ID = 11;
 	
+	/**
+	 * @const string
+	 */
+	const CAMPAIGN_DELIMITER = '|';
+	
 	
 	/**
 	 * Indicates the type of request, will be mapped to "utmt" parameter
@@ -118,6 +123,10 @@ abstract class Request extends HttpRequest {
 		// and http://code.google.com/intl/de-DE/apis/analytics/docs/tracking/eventTrackerGuide.html#implementationConsiderations
 		if($this->session->getTrackCount() > 500) {
 			Tracker::_raiseError('Google Analytics does not guarantee to process more than 500 requests per session.', __METHOD__);
+		}
+		
+		if($this->tracker->getCampaign()) {
+			$this->tracker->getCampaign()->increaseResponseCount();
 		}
 		
 		return parent::buildHttpRequest();
@@ -146,6 +155,7 @@ abstract class Request extends HttpRequest {
 		
 		$p = $this->buildVisitorParameters($p);
 		$p = $this->buildCustomVariablesParameter($p);
+		$p = $this->buildCampaignParameters($p);
 		$p = $this->buildCookieParameters($p);
 		
 		return $p;
@@ -244,6 +254,41 @@ abstract class Request extends HttpRequest {
 		}
 		
 		$p->utmcc = implode('+', $cookies);
+		
+		return $p;
+	}
+	
+	/**
+	 * @param \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder $p
+	 * @return \UnitedPrototype\GoogleAnalytics\Internals\ParameterHolder
+	 */
+	protected function buildCampaignParameters(ParameterHolder $p) {
+		$campaign = $this->tracker->getCampaign();
+		if($campaign) {
+			$p->__utmz  = $this->generateDomainHash() . '.';
+			$p->__utmz .= $campaign->getCreationTime()->format('U') . '.';
+			$p->__utmz .= $this->visitor->getVisitCount() . '.';
+			$p->__utmz .= $campaign->getResponseCount() . '.';
+			
+			// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignTracker.as#236
+			$data = array(
+				'utmcid'   => $campaign->getId(),
+				'utmcsr'   => $campaign->getSource(),
+				'utmgclid' => $campaign->getGClickId(),
+				'utmdclid' => $campaign->getDClickId(),
+				'utmccn'   => $campaign->getName(),
+				'utmcmd'   => $campaign->getMedium(),
+				'utmctr'   => $campaign->getTerm(),
+				'utmcct'   => $campaign->getContent(),
+			);
+			foreach($data as $key => $value) {
+				if($value !== null && $value !== '') {
+					// Only spaces and pluses get escaped in gaforflash and ga.js, so we do the same
+					$p->__utmz .= $key . '=' . str_replace(array('+', ' '), '%20', $value) . static::CAMPAIGN_DELIMITER;
+				}
+			}
+			$p->__utmz = rtrim($p->__utmz, static::CAMPAIGN_DELIMITER);
+		}
 		
 		return $p;
 	}

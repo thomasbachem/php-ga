@@ -348,27 +348,86 @@ class ParameterHolder {
 	
 	// - - - - - - - - - - - - - - - - - Campaign parameters - - - - - - - - - - - - - - - - -
 	
-	// TODO: Implementation needed
 	/**
 	 * Starts a new campaign session. Either utmcn or utmcr is present on any given request,
 	 * but never both at the same time. Changes the campaign tracking data; but does not start
 	 * a new session. Either 1 or not set.
 	 * 
+	 * Found in gaforflash but not in ga.js, so we do not use it, but it will stay here for
+	 * documentation completeness.
+	 * 
+	 * @deprecated
 	 * @var int
 	 */
 	public $utmcn;
 	
-	// TODO: Implementation needed
 	/**
 	 * Indicates a repeat campaign visit. This is set when any subsequent clicks occur on the
 	 * same link. Either utmcn or utmcr is present on any given request, but never both at the
 	 * same time. Either 1 or not set.
 	 * 
+	 * Found in gaforflash but not in ga.js, so we do not use it, but it will stay here for
+	 * documentation completeness.
+	 * 
+	 * @deprecated
 	 * @var int
 	 */
 	public $utmcr;
 	
-	// TODO: Implementation needed
+	/**
+	 * Campaign ID, a.k.a. "utm_id" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmcid;
+	
+	/**
+	 * Source, a.k.a. "utm_source" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmcsr;
+	
+	/**
+	 * Google AdWords Click ID, a.k.a. "gclid" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmgclid;
+	
+	/**
+	 * Not known for sure, but expected to be a DoubleClick Ad Click ID.
+	 * @var string
+	 */
+	public $utmdclid;
+	
+	/**
+	 * Name, a.k.a. "utm_campaign" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmccn;
+	
+	/**
+	 * Medium, a.k.a. "utm_medium" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmcmd;
+	
+	/**
+	 * Terms/Keywords, a.k.a. "utm_term" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmctr;
+	
+	/**
+	 * Ad Content Description, a.k.a. "utm_content" query parameter for ga.js
+	 * @var string
+	 */
+	public $utmcct;
+	
+	/**
+	 * Unknown so far. Found in ga.js.
+	 * @var int
+	 */
+	public $utmcvr;
+	
     /**
 	 * Campaign tracking cookie parameter.
 	 * 
