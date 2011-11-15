@@ -158,6 +158,87 @@ class Visitor {
 	}
 	
 	/**
+	 * Will extract information for the "uniqueId", "firstVisitTime", "previousVisitTime",
+	 * "currentVisitTime" and "visitCount" properties from the given "__utma" cookie
+	 * value.
+	 * 
+	 * @see Internals\ParameterHolder::$__utma
+	 * @see Internals\Request\Request::buildCookieParameters()
+	 * @param string $value
+	 * @return $this
+	 */
+	public function fromUtma($value) {
+		$parts = explode('.', $value);
+		if(count($parts) != 6) {
+			Tracker::_raiseError('The given "__utma" cookie value is invalid.', __METHOD__);
+			return $this;
+		}
+		
+		$this->setUniqueId($parts[1]);
+		$this->setFirstVisitTime(new DateTime('@' . $parts[2]));
+		$this->setPreviousVisitTime(new DateTime('@' . $parts[3]));
+		$this->setCurrentVisitTime(new DateTime('@' . $parts[4]));
+		$this->setVisitCount($parts[5]);
+		
+		// Allow chaining
+		return $this;
+	}
+	
+	/**
+	 * Will extract information for the "ipAddress", "userAgent" and "locale" properties
+	 * from the given $_SERVER variable.
+	 * 
+	 * @param array $value
+	 * @return $this
+	 */
+	public function fromServerVar(array $value) {
+		if(!empty($value['REMOTE_ADDR'])) {
+			$ip = null;
+			foreach(array('X_FORWARDED_FOR', 'REMOTE_ADDR') as $key) {
+				if(!empty($value[$key]) && !$ip) {
+					$ips = explode(',', $value[$key]);
+					$ip  = trim($ips[(count($ips) - 1)]);
+					
+					// Double-check if the address has a valid format
+					if(!preg_match('/^[\d+]{1,3}\.[\d+]{1,3}\.[\d+]{1,3}\.[\d+]{1,3}$/i', $ip)) {
+						$ip = null;
+					}
+					// Exclude private IP address ranges
+					if(preg_match('#^(?:127\.0\.0\.1|10\.|192\.168\.|172\.(?:1[6-9]|2[0-9]|3[0-1])\.)#', $ip)) {
+						$ip = null;
+					}
+				}
+			}
+			
+			if($ip) {
+				$this->setIpAddress($ip);
+			}
+		}
+		
+		if(!empty($value['HTTP_USER_AGENT'])) {
+			$this->setUserAgent($value['HTTP_USER_AGENT']);
+		}
+		
+		if(!empty($value['HTTP_ACCEPT_LANGUAGE'])) {
+			$parsedLocales = array();
+			if(preg_match_all('/(^|\s*,\s*)([a-zA-Z]{1,8}(-[a-zA-Z]{1,8})*)\s*(;\s*q\s*=\s*(1(\.0{0,3})?|0(\.[0-9]{0,3})))?/i', $value['HTTP_ACCEPT_LANGUAGE'], $matches)) {
+				$matches[2] = array_map(function($part) { return str_replace('-', '_', $part); }, $matches[2]);
+				$matches[5] = array_map(function($part) { return $part === '' ? 1 : $part; }, $matches[5]);
+				$parsedLocales = array_combine($matches[2], $matches[5]);
+				arsort($parsedLocales, SORT_NUMERIC);
+				$parsedLocales = array_keys($parsedLocales);
+			}
+			
+			if($parsedLocales) {
+				$this->setLocale($parsedLocales[0]);
+			}
+		}
+		
+		// Allow chaining
+		return $this;
+	}
+	
+	/**
 	 * Generates a hashed value from user-specific properties.
 	 * 
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/v4/Tracker.as#542
