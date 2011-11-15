@@ -38,12 +38,16 @@ class Tracker {
 	
 	/**
 	 * Google Analytics client version on which this library is built upon,
-	 * will be mapped to "utmwv" parameter
+	 * will be mapped to "utmwv" parameter.
+	 * 
+	 * This doesn't necessarily mean that all features of the corresponding
+	 * ga.js version are implemented but rather that the requests comply
+	 * with these of ga.js.
 	 * 
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/changelog.html
 	 * @const string
 	 */
-	const VERSION = '4.9.2';
+	const VERSION = '5.2.2'; // As of 15.11.2011
 	
 	
 	/**
@@ -84,6 +88,11 @@ class Tracker {
 	 * @var array
 	 */
 	protected $customVariables = array();
+	
+	/**
+	 * @var \UnitedPrototype\GoogleAnalytics\Campaign
+	 */
+	protected $campaign;
 	
 	
 	/**
@@ -186,6 +195,25 @@ class Tracker {
 	 */
 	public function removeCustomVariable($index) {
 		unset($this->customVariables[$index]);
+	}
+	
+	/**
+	 * @param \UnitedPrototype\GoogleAnalytics\Campaign $campaign
+	 */
+	public function setCampaign(Campaign $campaign = null) {
+		if($campaign) {
+			// Ensure that all required parameters are set
+			$campaign->validate();
+		}
+		
+		$this->campaign = $campaign;
+	}
+	
+	/**
+	 * @return \UnitedPrototype\GoogleAnalytics\Campaign|null
+	 */
+	public function getCampaign() {
+		return $this->campaign;
 	}
 	
 	/**

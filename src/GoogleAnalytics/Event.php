@@ -30,28 +30,47 @@ namespace UnitedPrototype\GoogleAnalytics;
 
 /**
  * @link http://code.google.com/apis/analytics/docs/tracking/eventTrackerOverview.html
+ * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEventTracking.html
  */
 class Event {	
 	
 	/**
+	 * The general event category (e.g. "Videos").
+	 * 
 	 * @var string
 	 */
 	protected $category;
 	
 	/**
+	 * The action for the event (e.g. "Play").
+	 * 
 	 * @var string
 	 */
 	protected $action;
 	
 	/**
+	 * An optional descriptor for the event (e.g. the video's title).
+	 * 
 	 * @var string
 	 */
 	protected $label;
 	
 	/**
+	 * An optional value associated with the event. You can see your event values in the Overview,
+	 * Categories, and Actions reports, where they are listed by event or aggregated across events,
+	 * depending upon your report view.
+	 * 
 	 * @var int
 	 */
 	protected $value;
+	
+	/**
+	 * Default value is false. By default, event hits will impact a visitor's bounce rate.
+	 * By setting this parameter to true, this event hit will not be used in bounce rate calculations.
+	 * 
+	 * @var bool
+	 */
+	protected $noninteraction = false;
 	
 	
 	/**
@@ -59,12 +78,14 @@ class Event {
 	 * @param string $action
 	 * @param string $label
 	 * @param int $value
+	 * @param bool $noninteraction
 	 */
-	public function __construct($category = null, $action = null, $label = null, $value = null) {
-		if($category !== null) $this->setCategory($category);
-		if($action   !== null) $this->setAction($action);
-		if($label    !== null) $this->setLabel($label);
-		if($value    !== null) $this->setValue($value);
+	public function __construct($category = null, $action = null, $label = null, $value = null, $noninteraction = null) {
+		if($category       !== null) $this->setCategory($category);
+		if($action         !== null) $this->setAction($action);
+		if($label          !== null) $this->setLabel($label);
+		if($value          !== null) $this->setValue($value);
+		if($noninteraction !== null) $this->setNoninteraction($noninteraction);
 	}
 	
 	public function validate() {
@@ -127,6 +148,20 @@ class Event {
 	 */
 	public function setValue($value) {
 		$this->value = (int)$value;
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function getNoninteraction() {
+		return $this->noninteraction;
+	}
+	
+	/**
+	 * @param bool $value
+	 */
+	public function setNoninteraction($value) {
+		$this->noninteraction = (bool)$value;
 	}
 	
 }

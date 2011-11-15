@@ -99,6 +99,10 @@ class EventRequest extends Request {
 		
 		$p->utme .= $x10->renderUrlString();
 		
+		if($this->event->getNoninteraction()) {
+			$p->utmni = 1;
+		}
+		
 		return $p;
 	}
 	

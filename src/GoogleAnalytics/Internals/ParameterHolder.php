@@ -90,6 +90,14 @@ class ParameterHolder {
 	public $utme;
 	
 	/**
+	 * Event "non-interaction" parameter. By default, the event hit will impact a visitor's bounce rate.
+	 * By setting this parameter to 1, this event hit will not be used in bounce rate calculations.
+	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiEventTracking.html
+	 * @var int
+	 */
+	public $utmni;
+	
+	/**
 	 * Whether to anonymize IP addresses within Google Analytics by stripping
 	 * the last IP address block, either null or 1
 	 * @var int
