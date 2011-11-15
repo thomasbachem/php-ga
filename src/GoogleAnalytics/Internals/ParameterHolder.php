@@ -492,21 +492,21 @@ class ParameterHolder {
 	// - - - - - - - - - - - - - - - - - Custom Variables parameters (deprecated) - - - - - - - - - - - - - - - - -
 	
 	// TODO: Implementation needed?
-    /**
-     * Deprecated custom variables cookie parameter.
+	/**
+	 * Deprecated custom variables cookie parameter.
 	 * 
 	 * This cookie parameter is no longer relevant as of migration from setVar() to
-	 * setCustomVar() and hence not support by this library, but will stay here for
+	 * setCustomVar() and hence not supported by this library, but will stay here for
 	 * documentation completeness.
-     * 
-     * The __utmv cookie passes the information provided via the setVar() method,
-     * which you use to create a custom user segment.
 	 * 
-     * Expiration:
-     * 2 years from set/update.
-     * 
-     * Format:
-     * __utmv=<domainHash>.<value>
+	 * The __utmv cookie passes the information provided via the setVar() method,
+	 * which you use to create a custom user segment.
+	 * 
+	 * Expiration:
+	 * 2 years from set/update.
+	 * 
+	 * Format:
+	 * __utmv=<domainHash>.<value>
 	 * 
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/data/UTMV.as
 	 * @deprecated
