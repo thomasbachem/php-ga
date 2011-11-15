@@ -33,6 +33,7 @@ use UnitedPrototype\GoogleAnalytics\Internals\Request\PageviewRequest;
 use UnitedPrototype\GoogleAnalytics\Internals\Request\EventRequest;
 use UnitedPrototype\GoogleAnalytics\Internals\Request\TransactionRequest;
 use UnitedPrototype\GoogleAnalytics\Internals\Request\ItemRequest;
+use UnitedPrototype\GoogleAnalytics\Internals\Request\SocialInteractionRequest;
 
 class Tracker {
 	
@@ -290,6 +291,25 @@ class Tracker {
 			$request->setTracker($this);
 			$request->fire();
 		}
+	}
+	
+	/**
+	 * Equivalent of _trackSocial() in GA Javascript client.
+	 * 
+	 * @link http://code.google.com/apis/analytics/docs/tracking/gaTrackingSocial.html#settingUp
+	 * @param \UnitedPrototype\GoogleAnalytics\SocialInteraction $socialInteraction
+	 * @param \UnitedPrototype\GoogleAnalytics\Page $page
+	 * @param \UnitedPrototype\GoogleAnalytics\Session $session
+	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
+	 */
+	public function trackSocial(SocialInteraction $socialInteraction, Page $page, Session $session, Visitor $visitor) {
+		$request = new SocialInteractionRequest(static::$config);
+		$request->setSocialInteraction($socialInteraction);
+		$request->setPage($page);
+		$request->setSession($session);
+		$request->setVisitor($visitor);
+		$request->setTracker($this);
+		$request->fire();
 	}
 	
 	/**

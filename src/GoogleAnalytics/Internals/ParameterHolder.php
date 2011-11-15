@@ -60,7 +60,8 @@ class ParameterHolder {
 	
 	/**
 	 * Indicates the type of request, which is one of null (for page), "event",
-	 * "tran", "item", or "var"
+	 * "tran", "item", "social", "var" (deprecated) or "error" (used by ga.js
+	 * for internal client error logging).
 	 * @var string
 	 */
 	public $utmt;
@@ -447,6 +448,27 @@ class ParameterHolder {
 	 * @var string
 	 */
 	public $__utmz;
+	
+	
+	// - - - - - - - - - - - - - - - - - Social Tracking parameters - - - - - - - - - - - - - - - - -
+	
+	/**
+	 * The network on which the action occurs (e.g. Facebook, Twitter).
+	 * @var string
+	 */
+	public $utmsn;
+	
+	/**
+	 * The type of action that happens (e.g. Like, Send, Tweet).
+	 * @var string
+	 */
+	public $utmsa;
+	
+	/**
+	 * The page URL from which the action occurred.
+	 * @var string
+	 */
+	public $utmsid;
 	
 	
 	// - - - - - - - - - - - - - - - - - Google Website Optimizer (GWO) parameters - - - - - - - - - - - - - - - - -

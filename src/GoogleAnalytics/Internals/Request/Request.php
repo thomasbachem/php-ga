@@ -72,6 +72,10 @@ abstract class Request extends HttpRequest {
 	 */
 	const TYPE_ITEM           = 'item';
 	/**
+	 * @const string
+	 */
+	const TYPE_SOCIAL         = 'social';
+	/**
 	 * This type of request is deprecated in favor of encoding custom variables
 	 * within the "utme" parameter, but we include it here for completeness
 	 * 
