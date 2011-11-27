@@ -30,12 +30,20 @@ namespace UnitedPrototype\GoogleAnalytics\Internals\Request;
 
 use UnitedPrototype\GoogleAnalytics\Page;
 
+use UnitedPrototype\GoogleAnalytics\Internals\X10;
+
 class PageviewRequest extends Request {
 	
 	/**
 	 * @var \UnitedPrototype\GoogleAnalytics\Page
 	 */
 	protected $page;
+	
+	
+	/**
+	 * @const int
+	 */
+	const X10_SITESPEED_PROJECT_ID = 14;
 	
 	
 	/**
@@ -58,6 +66,24 @@ class PageviewRequest extends Request {
 		}
 		if($this->page->getReferrer() !== null) {
 			$p->utmr = $this->page->getReferrer();
+		}
+		
+		if($this->page->getLoadTime() !== null) {
+			// Sample sitespeed measurements
+			if($p->utmn % 100 < $this->config->getSitespeedSampleRate()) {
+				$x10 = new X10();
+				
+				$x10->clearKey(self::X10_SITESPEED_PROJECT_ID);
+				$x10->clearValue(self::X10_SITESPEED_PROJECT_ID);
+				
+				// Taken from ga.js code
+				$key = max(min(floor($this->page->getLoadTime() / 100), 5000), 0) * 100;
+				$x10->setKey(self::X10_SITESPEED_PROJECT_ID, X10::OBJECT_KEY_NUM, $key);
+				
+				$x10->setValue(self::X10_SITESPEED_PROJECT_ID, X10::VALUE_VALUE_NUM, $this->page->getLoadTime());
+				
+				$p->utme .= $x10->renderUrlString();
+			}
 		}
 		
 		return $p;

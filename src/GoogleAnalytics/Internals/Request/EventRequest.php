@@ -43,23 +43,7 @@ class EventRequest extends Request {
 	/**
 	 * @const int
 	 */
-	const X10_EVENT_PROJECT_ID      = 5;
-	/**
-	 * @const int
-	 */
-	const X10_EVENT_OBJECT_KEY_NUM  = 1;
-	/**
-	 * @const int
-	 */
-	const X10_EVENT_TYPE_KEY_NUM    = 2;
-	/**
-	 * @const int
-	 */
-	const X10_EVENT_LABEL_KEY_NUM   = 3;
-	/**
-	 * @const int
-	 */
-	const X10_EVENT_VALUE_VALUE_NUM = 1;
+	const X10_EVENT_PROJECT_ID = 5;
 	
 	
 	/**
@@ -83,18 +67,18 @@ class EventRequest extends Request {
 		$x10->clearValue(self::X10_EVENT_PROJECT_ID);
 		
 		// Object / Category
-		$x10->setKey(self::X10_EVENT_PROJECT_ID, self::X10_EVENT_OBJECT_KEY_NUM, $this->event->getCategory());
+		$x10->setKey(self::X10_EVENT_PROJECT_ID, X10::OBJECT_KEY_NUM, $this->event->getCategory());
 		
 		// Event Type / Action
-		$x10->setKey(self::X10_EVENT_PROJECT_ID, self::X10_EVENT_TYPE_KEY_NUM, $this->event->getAction());
+		$x10->setKey(self::X10_EVENT_PROJECT_ID, X10::TYPE_KEY_NUM, $this->event->getAction());
 		
 		if($this->event->getLabel() !== null) {
 			// Event Description / Label
-			$x10->setKey(self::X10_EVENT_PROJECT_ID, self::X10_EVENT_LABEL_KEY_NUM, $this->event->getLabel());
+			$x10->setKey(self::X10_EVENT_PROJECT_ID, X10::LABEL_KEY_NUM, $this->event->getLabel());
 		}
 		
 		if($this->event->getValue() !== null) {
-			$x10->setValue(self::X10_EVENT_PROJECT_ID, self::X10_EVENT_VALUE_VALUE_NUM, $this->event->getValue());
+			$x10->setValue(self::X10_EVENT_PROJECT_ID, X10::VALUE_VALUE_NUM, $this->event->getValue());
 		}
 		
 		$p->utme .= $x10->renderUrlString();

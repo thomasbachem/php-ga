@@ -132,6 +132,17 @@ class Config {
 	 */
 	protected $anonymizeIpAddresses = false;
 	
+	/**
+	 * Defines a new sample set size (0-100) for Site Speed data collection.
+	 * By default, a fixed 1% sampling of your site visitors make up the data pool from which
+	 * the Site Speed metrics are derived.
+	 * 
+	 * @see Page::$loadTime
+	 * @link http://code.google.com/apis/analytics/docs/gaJS/gaJSApiBasicConfiguration.html#_gat.GA_Tracker_._setSiteSpeedSampleRate
+	 * @var int
+	 */
+	protected $sitespeedSampleRate = 1;
+	
 	
 	/**
 	 * @param array $properties
@@ -259,6 +270,24 @@ class Config {
 	 */
 	public function setAnonymizeIpAddresses($anonymizeIpAddresses) {
 		$this->anonymizeIpAddresses = $anonymizeIpAddresses;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getSitespeedSampleRate() {
+		return $this->sitespeedSampleRate;
+	}
+	
+	/**
+	 * @param int $sitespeedSampleRate
+	 */
+	public function setSitespeedSampleRate($sitespeedSampleRate) {
+		if((int)$sitespeedSampleRate != (float)$sitespeedSampleRate || $sitespeedSampleRate < 0 || $sitespeedSampleRate > 100) {
+			Tracker::_raiseError('For consistency with ga.js, sample rates must be specified as a number between 0 and 100.', __METHOD__);
+		}
+		
+		$this->sitespeedSampleRate = (int)$sitespeedSampleRate;
 	}
 
 }

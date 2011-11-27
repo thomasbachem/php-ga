@@ -99,6 +99,24 @@ class X10 {
 	
 	
 	/**
+	 * @const int
+	 */
+	const OBJECT_KEY_NUM  = 1;
+	/**
+	 * @const int
+	 */
+	const TYPE_KEY_NUM    = 2;
+	/**
+	 * @const int
+	 */
+	const LABEL_KEY_NUM   = 3;
+	/**
+	 * @const int
+	 */
+	const VALUE_VALUE_NUM = 1;
+	
+	
+	/**
 	 * @param int $projectId
 	 * @return bool
 	 */

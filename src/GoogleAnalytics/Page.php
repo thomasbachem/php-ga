@@ -64,6 +64,14 @@ class Page {
 	 */
 	protected $referrer;
 	
+	/**
+	 * Page load time in milliseconds, will be encoded into "utme" parameter.
+	 * 
+	 * @see Internals\ParameterHolder::$utme
+	 * @var int
+	 */
+	protected $loadTime;
+	
 	
 	/**
 	 * Constant to mark referrer as a site-internal one.
@@ -139,6 +147,24 @@ class Page {
 	 */
 	public function getReferrer() {
 		return $this->referrer;
+	}
+	
+	/**
+	 * @param int $loadTime
+	 */
+	public function setLoadTime($loadTime) {
+		if((int)$loadTime != (float)$loadTime) {
+			Tracker::_raiseError('Page load time must be specified in integer milliseconds.', __METHOD__);
+		}
+		
+		$this->loadTime = (int)$loadTime;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getLoadTime() {
+		return $this->loadTime;
 	}
 	
 }
