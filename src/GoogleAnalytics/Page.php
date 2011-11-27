@@ -154,7 +154,7 @@ class Page {
 	 */
 	public function setLoadTime($loadTime) {
 		if((int)$loadTime != (float)$loadTime) {
-			Tracker::_raiseError('Page load time must be specified in integer milliseconds.', __METHOD__);
+			return Tracker::_raiseError('Page load time must be specified in integer milliseconds.', __METHOD__);
 		}
 		
 		$this->loadTime = (int)$loadTime;

@@ -284,7 +284,7 @@ class Config {
 	 */
 	public function setSitespeedSampleRate($sitespeedSampleRate) {
 		if((int)$sitespeedSampleRate != (float)$sitespeedSampleRate || $sitespeedSampleRate < 0 || $sitespeedSampleRate > 100) {
-			Tracker::_raiseError('For consistency with ga.js, sample rates must be specified as a number between 0 and 100.', __METHOD__);
+			return Tracker::_raiseError('For consistency with ga.js, sample rates must be specified as a number between 0 and 100.', __METHOD__);
 		}
 		
 		$this->sitespeedSampleRate = (int)$sitespeedSampleRate;
