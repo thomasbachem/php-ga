@@ -148,11 +148,16 @@ abstract class Request extends HttpRequest {
 		$p->utmt = $this->getType();
 		$p->utmn = Util::generate32bitRandom();
 		
-		$p->aip = $this->tracker->getConfig()->getAnonymizeIpAddresses() ? 1 : null;
+		// The "utmip" parameter is only relevant if a mobile analytics
+		// ID (MO-123456-7) was given,
+		// see http://code.google.com/p/php-ga/issues/detail?id=9
+		$p->utmip = $this->visitor->getIpAddress();
 		
-		// The IP parameter does sadly seem to be ignored by GA, so we
-		// shouldn't set it as of today but keep it here for later reference
-		// $p->utmip = $this->visitor->getIpAddress();
+		$p->aip = $this->tracker->getConfig()->getAnonymizeIpAddresses() ? 1 : null;
+		if($p->aip) {
+			// Anonymize last IP block
+			$p->utmip = substr($p->utmip, 0, strrpos($p->utmip, '.')) . '.0';
+		}
 		
 		$p->utmhid = $this->session->getSessionId();
 		$p->utms   = $this->session->getTrackCount();

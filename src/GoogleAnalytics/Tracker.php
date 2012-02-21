@@ -126,7 +126,7 @@ class Tracker {
 	 * @param string $value
 	 */
 	public function setAccountId($value) {
-		if(!preg_match('/^UA-[0-9]*-[0-9]*$/', $value)) {
+		if(!preg_match('/^(UA|MO)-[0-9]*-[0-9]*$/', $value)) {
 			static::_raiseError('"' . $value . '" is not a valid Google Analytics account ID.', __METHOD__);
 		}
 		
