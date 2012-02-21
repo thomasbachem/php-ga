@@ -191,7 +191,12 @@ abstract class HttpRequest {
 			$timeoutUs = ($timeout - $timeoutS) * 100000;
 			stream_set_timeout($socket, $timeoutS, $timeoutUs);
 			
-			fwrite($socket, $request);
+			// Ensure that the full request is sent (see http://code.google.com/p/php-ga/issues/detail?id=11)
+			$sentData = 0;
+			$toBeSentData = strlen($request);
+			while($sentData < $toBeSentData) {
+				$sentData += fwrite($socket, $request);
+			}
 			
 			if(!$this->config->getFireAndForget()) {
 				while(!feof($socket)) {
