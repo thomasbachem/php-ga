@@ -76,6 +76,29 @@ class Session {
 	}
 	
 	/**
+	 * Will extract information for the "trackCount" and "startTime"
+	 * properties from the given "__utmb" cookie value.
+	 * 
+	 * @see Internals\ParameterHolder::$__utmb
+	 * @see Internals\Request\Request::buildCookieParameters()
+	 * @param string $value
+	 * @return $this
+	 */
+	public function fromUtmb($value) {
+		$parts = explode('.', $value);
+		if(count($parts) != 4) {
+			Tracker::_raiseError('The given "__utmb" cookie value is invalid.', __METHOD__);
+			return $this;
+		}
+		
+		$this->setTrackCount($parts[2]);
+		$this->setStartTime(new DateTime('@' . $parts[4]));
+		
+		// Allow chaining
+		return $this;
+	}
+	
+	/**
 	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/core/DocumentInfo.as#52
 	 * @return int
 	 */
