@@ -100,8 +100,10 @@ class CustomVariable {
 		// name and value of 64 bytes after URL encoding,
 		// see http://code.google.com/apis/analytics/docs/tracking/gaTrackingCustomVariables.html#varTypes
 		// and http://xahlee.org/js/google_analytics_tracker_2010-07-01_expanded.js line 563
-		if(strlen(Util::encodeUriComponent($this->name . $this->value)) > 64) {
-			Tracker::_raiseError('Custom Variable combined name and value encoded length must not be larger than 64 bytes.', __METHOD__);
+		// This limit was increased to 128 bytes BEFORE encoding with the 2012-01 release of ga.js however,
+		// see http://code.google.com/apis/analytics/community/gajs_changelog.html
+		if(strlen($this->name . $this->value) > 128) {
+			Tracker::_raiseError('Custom Variable combined name and value length must not be larger than 128 bytes.', __METHOD__);
 		}
 	}
 	

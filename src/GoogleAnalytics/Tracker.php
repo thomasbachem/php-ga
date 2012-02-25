@@ -48,7 +48,7 @@ class Tracker {
 	 * @link http://code.google.com/apis/analytics/docs/gaJS/changelog.html
 	 * @const string
 	 */
-	const VERSION = '5.2.2'; // As of 15.11.2011
+	const VERSION = '5.2.5'; // As of 25.02.2012
 	
 	
 	/**
