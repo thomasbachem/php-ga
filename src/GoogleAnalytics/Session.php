@@ -91,8 +91,8 @@ class Session {
 			return $this;
 		}
 		
-		$this->setTrackCount($parts[2]);
-		$this->setStartTime(new DateTime('@' . $parts[4]));
+		$this->setTrackCount($parts[1]);
+		$this->setStartTime(new DateTime('@' . $parts[3]));
 		
 		// Allow chaining
 		return $this;
