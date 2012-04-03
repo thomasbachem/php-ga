@@ -28,6 +28,7 @@
 
 namespace UnitedPrototype\GoogleAnalytics;
 
+use UnitedPrototype\GoogleAnalytics\Internals\Request\Request;
 use UnitedPrototype\GoogleAnalytics\Internals\Util;
 
 use DateTime;
@@ -158,33 +159,81 @@ class Campaign {
 	 * @see createFromReferrer
 	 * @param string $type See TYPE_* constants
 	 */
-	public function __construct($type) {
-		if(!in_array($type, array(self::TYPE_DIRECT, self::TYPE_ORGANIC, self::TYPE_REFERRAL))) {
-			Tracker::_raiseError('Campaign type has to be one of the Campaign::TYPE_* constant values.', __METHOD__);
-		}
-		
-		$this->type = $type;
-		
-		switch($type) {
-			// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignManager.as#375
-			case self::TYPE_DIRECT:
-				$this->name   = '(direct)';
-				$this->source = '(direct)';
-				$this->medium = '(none)';
-				break;
-			// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignManager.as#340
-			case self::TYPE_REFERRAL:
-				$this->name   = '(referral)';
-				$this->medium = 'referral';
-				break;
-			// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignManager.as#280
-			case self::TYPE_ORGANIC:
-				$this->name   = '(organic)';
-				$this->medium = 'organic';
-				break;
+	public function __construct($type = null) {
+		if(isset($type)) {
+			if(!in_array($type, array(self::TYPE_DIRECT, self::TYPE_ORGANIC, self::TYPE_REFERRAL))) {
+				Tracker::_raiseError('Campaign type has to be one of the Campaign::TYPE_* constant values.', __METHOD__);
+			}
+			
+			$this->type = $type;
+			
+			switch($type) {
+				// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignManager.as#375
+				case self::TYPE_DIRECT:
+					$this->name   = '(direct)';
+					$this->source = '(direct)';
+					$this->medium = '(none)';
+					break;
+				// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignManager.as#340
+				case self::TYPE_REFERRAL:
+					$this->name   = '(referral)';
+					$this->medium = 'referral';
+					break;
+				// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignManager.as#280
+				case self::TYPE_ORGANIC:
+					$this->name   = '(organic)';
+					$this->medium = 'organic';
+					break;
+			}
 		}
 		
 		$this->creationTime = new DateTime();
+	}
+	
+	/**
+	 * Will extract information for the "trackCount" and "startTime"
+	 * properties from the given "__utmz" cookie value.
+	 * 
+	 * @see Internals\ParameterHolder::$__utmz
+	 * @see Internals\Request\Request::buildCampaignParameters()
+	 * @param string $value
+	 * @return $this
+	 */
+	public function fromUtmz($value) {
+		$params = explode(Request::CAMPAIGN_DELIMITER, $value);
+		$parts  = explode('.', $params[0], 5);
+		if(count($parts) != 5) {
+			Tracker::_raiseError('The given "__utmz" cookie value is invalid.', __METHOD__);
+			return $this;
+		}
+		
+		$this->setCreationTime(new DateTime('@' . $parts[1]));
+		$this->setResponseCount($parts[3]);
+		
+		array_unshift($params, $parts[4]);
+		foreach($params as $param) {
+			list($key, $val) = explode('=', $param);
+			
+			// See http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignTracker.as#236
+			$paramMap = array(
+				'utmcid'   => 'id',
+				'utmcsr'   => 'source',
+				'utmgclid' => 'gClickId',
+				'utmdclid' => 'dClickId',
+				'utmccn'   => 'name',
+				'utmcmd'   => 'medium',
+				'utmctr'   => 'term',
+				'utmcct'   => 'content',
+			);
+			
+			if(isset($paramMap[$key])) {
+				$method = 'set' . $paramMap[$key];
+				$this->$method(urldecode($val));
+			}
+		}
+		
+		// Allow chaining
+		return $this;
 	}
 	
 	/**
