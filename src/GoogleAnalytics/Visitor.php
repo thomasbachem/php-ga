@@ -196,8 +196,10 @@ class Visitor {
 			$ip = null;
 			foreach(array('X_FORWARDED_FOR', 'REMOTE_ADDR') as $key) {
 				if(!empty($value[$key]) && !$ip) {
+					// First IP address is the one of the client,
+					// see http://en.wikipedia.org/wiki/X-Forwarded-For
 					$ips = explode(',', $value[$key]);
-					$ip  = trim($ips[(count($ips) - 1)]);
+					$ip  = trim($ips[0]);
 					
 					// Double-check if the address has a valid format
 					if(!preg_match('/^[\d+]{1,3}\.[\d+]{1,3}\.[\d+]{1,3}\.[\d+]{1,3}$/i', $ip)) {
