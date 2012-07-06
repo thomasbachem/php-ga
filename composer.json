@@ -1,0 +1,21 @@
+{
+    "name": "united-prototype/php-ga",
+    "description": "\"ga.js in PHP\" - Implementation of a generic server-side Google Analytics client in PHP that implements nearly every parameter and tracking feature of the original GA Javascript client.",
+    "license": "LGPL-3.0",
+    "keywords": ["google", "analytics", "server"],
+    "homepage": "https://github.com/thomasbachem/php-ga",
+    "authors": [
+        {
+            "name": "Thomas Bachem",
+            "email": "mail@thomasbachem.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "UnitedPrototype\\GoogleAnalytics": "src/"
+        }
+    }
+}
