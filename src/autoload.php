@@ -11,7 +11,7 @@ spl_autoload_register(function($className) {
 	$classPath = strtr($className, '\\', '/') . '.php';
 	
 	if(file_exists(__DIR__ . $classPath)) {
-		require(__DIR__ . $classPath);
+	     require(__DIR__ . '/' . $classPath);
 	}
 });
 
