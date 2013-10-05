@@ -1,0 +1,53 @@
+Changelog
+===========================================================================================
+
+
+1.1.2 (October 5, 2013)
+-------------------------------------------------------------------------------------------
+CHG: Moved project to GitHub.
+CHG: The autoloader will no longer raise an error if a file in its namespace doesn't exist.
+
+
+1.1.1 (March 20, 2012)
+-------------------------------------------------------------------------------------------
+FIX: Fixed Session::fromUtmb() (https://code.google.com/p/php-ga/issues/detail?id=14)
+
+
+1.1 (February 25, 2012)
+-------------------------------------------------------------------------------------------
+Based on Google Javascript client version 5.2.5.
+
+ADD: Site Speed Tracking
+ADD: Mobile IP tracking support (https://code.google.com/p/php-ga/issues/detail?id=9)
+ADD: Session::fromUtmb() convenience method
+CHG: GA does now allow custom variables to hold up to 128 bytes in combined name and value
+     length before encoding
+FIX: Fixed possible issues in "fire and forget" mode
+     (https://code.google.com/p/php-ga/issues/detail?id=11)
+
+
+1.0 (November 15, 2011)
+-------------------------------------------------------------------------------------------
+Based on Google Javascript client version 5.2.2.
+
+ADD: Campaign Tracking
+ADD: Social Interaction Tracking (https://code.google.com/p/php-ga/issues/detail?id=4)
+ADD: Non-interaction parameter for Event Tracking
+ADD: Error severity (silent, warnings, exceptions) configuration
+ADD: Logging callback configuration and simulation mode
+ADD: Visitor::fromUtma() and ::fromServerVar() convenience methods
+CHG: Config instance is now static across all tracker instances
+CHG: When using the "sendOnShutdown" setting, Custom Variables that were set after issuing
+     a request will automatically get included
+FIX: Fixed problems with event tracking
+     (https://code.google.com/p/php-ga/issues/detail?id=2,
+     https://code.google.com/p/php-ga/issues/detail?id=6)
+FIX: Fixed encoding of spaces for event trackings
+     (https://code.google.com/p/php-ga/issues/detail?id=3)
+FIX: Do not send empty "User-Agent" or "X-Forwarded-For" HTTP headers
+FIX: Always use correct locale format ("-" instead of "_") for "utmul" parameter
+
+
+0.9 (October 7, 2010)
+-------------------------------------------------------------------------------------------
+Initial release. Based on Google Javascript client version 4.7.2.
