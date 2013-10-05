@@ -1,14 +1,18 @@
-Server-Side Google Analytics PHP Client
+Server-Side Google Analytics Client
 ===========================================================================================
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 **Oct 5, 2013:** php-ga was ported from [Google Code](https://code.google.com/p/php-ga/)
 where it has 8,000+ downloads and 160+ stares.
 
-*NOTE: php-ga is no longer maintained as Google finally released an official server-side
-tracking API: Measurement Protocol! I couldn't find any well-implemented client library for
-PHP yet, so feel free to help make php-ga 2.0 a Measurement Protocol PHP client library.*
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+**NOTE:** php-ga is no longer maintained as Google finally released an official server-side
+tracking API: Measurement Protocol! I couldn't find any well-implemented client library for
+PHP yet, so feel free to help make php-ga 2.0 a Measurement Protocol PHP client library.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+About
+-------------------------------------------------------------------------------------------
 
 php-ga basically is ga.js in PHP: An implementation of a generic server-side Google
 Analytics client in PHP that implements nearly every parameter and tracking feature of the
@@ -55,21 +59,17 @@ Gotchas
 -------------------------------------------------------------------------------------------
 
 - **100% namespaced OOP**
-
   As a matter of course.
 
 - **Completely abstracted from any enviroment**
-
   Doesn't rely on any globals like $_SERVER, PHP sessions or whatsoever - implement it the
   way you want.
 
 - **High-Performance Tracking**
-
   Can be configured to enqueue requests via register_shutdown_function() and to use
   non-blocking requests.
 
 - **Probably the most comprehensive technical documentation of GA**
-
   More than 50% of all source code lines are PHPDoc and inline comments!
 
 
@@ -77,7 +77,6 @@ Caveats
 -------------------------------------------------------------------------------------------
 
 - **Google Analytics' geo location functionalities won't work**
-
   Native geo location features like the worldmap view won't work anymore as they rely
   solely on the IP address of the GA client - which will always be the one of your
   server(s) when using this library.
