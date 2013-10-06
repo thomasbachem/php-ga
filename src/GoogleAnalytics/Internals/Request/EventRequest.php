@@ -29,6 +29,7 @@
 namespace UnitedPrototype\GoogleAnalytics\Internals\Request;
 
 use UnitedPrototype\GoogleAnalytics\Event;
+use UnitedPrototype\GoogleAnalytics\Page;
 
 use UnitedPrototype\GoogleAnalytics\Internals\X10;
 
@@ -86,6 +87,17 @@ class EventRequest extends Request {
 		if($this->event->getNoninteraction()) {
 			$p->utmni = 1;
 		}
+
+		if($this->page) {
+			$p->utmp  = $this->page->getPath();
+			$p->utmdt = $this->page->getTitle();
+			if($this->page->getCharset() !== null) {
+				$p->utmcs = $this->page->getCharset();
+			}
+			if($this->page->getReferrer() !== null) {
+				$p->utmr = $this->page->getReferrer();
+			}
+		}
 		
 		return $p;
 	}
@@ -104,6 +116,20 @@ class EventRequest extends Request {
 		$this->event = $event;
 	}
 	
+	/**
+	 * @return \UnitedPrototype\GoogleAnalytics\Page
+	 */
+	public function getPage() {
+		return $this->page;
+	}
+
+	/**
+	 * @param \UnitedPrototype\GoogleAnalytics\Page $page
+	 */
+	public function setPage(Page $page) {
+		$this->page = $page;
+	}
+
 }
 
 ?>

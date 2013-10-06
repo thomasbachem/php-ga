@@ -241,8 +241,9 @@ class Tracker {
 	 * @param \UnitedPrototype\GoogleAnalytics\Event $event
 	 * @param \UnitedPrototype\GoogleAnalytics\Session $session
 	 * @param \UnitedPrototype\GoogleAnalytics\Visitor $visitor
+	 * @param \UnitedPrototype\GoogleAnalytics\Page $page
 	 */
-	public function trackEvent(Event $event, Session $session, Visitor $visitor) {
+	public function trackEvent(Event $event, Session $session, Visitor $visitor, Page $page = null) {
 		// Ensure that all required parameters are set
 		$event->validate();
 		
@@ -250,6 +251,9 @@ class Tracker {
 		$request->setEvent($event);
 		$request->setSession($session);
 		$request->setVisitor($visitor);
+		if($page) {
+			$request->setPage($page);
+		}
 		$request->setTracker($this);
 		$request->fire();
 	}
