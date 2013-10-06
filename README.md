@@ -6,9 +6,13 @@ where it has 8,000+ downloads and 160+ stares.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 **NOTE:** php-ga is no longer maintained as Google finally released an official server-side
-tracking API: Measurement Protocol! I couldn't find any well-implemented client library for
-PHP yet, so feel free to help make php-ga 2.0 a Measurement Protocol PHP client library.
+tracking API: [Measurement Protocol](https://developers.google.com/analytics/devguides/collection/protocol/v1/)!
+I couldn't find any well-implemented client library for PHP yet, so feel free to help make
+php-ga 2.0 a Measurement Protocol PHP client library.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+You might also be interested in the companion project [php-gacx](https://github.com/thomasbachem/php-gacx)
+for Google Analytics Content Experiments.
 
 
 About
