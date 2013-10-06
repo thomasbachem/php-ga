@@ -194,7 +194,7 @@ class Visitor {
 	public function fromServerVar(array $value) {
 		if(!empty($value['REMOTE_ADDR'])) {
 			$ip = null;
-			foreach(array('X_FORWARDED_FOR', 'REMOTE_ADDR') as $key) {
+			foreach(array('HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP', 'REMOTE_ADDR') as $key) {
 				if(!empty($value[$key]) && !$ip) {
 					// First IP address is the one of the client,
 					// see http://en.wikipedia.org/wiki/X-Forwarded-For
