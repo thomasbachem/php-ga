@@ -58,7 +58,7 @@ class ItemRequest extends Request {
 		$p->utmtid = $this->item->getOrderId();
 		$p->utmipc = $this->item->getSku();
 		$p->utmipn = $this->item->getName();
-		$p->utmiva = $this->item->getVariation();
+		$p->utmiva = $this->item->getCategory();
 		$p->utmipr = $this->item->getPrice();
 		$p->utmiqt = $this->item->getQuantity();  
 		

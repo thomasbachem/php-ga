@@ -65,7 +65,7 @@ class Item {
 	 * @see Internals\ParameterHolder::$utmiva
 	 * @var string
 	 */
-	protected $variation;
+	protected $category;
 	
 	/**
 	 * Unit Price. Value is set to numbers only (e.g. 19.95), will be mapped to
@@ -134,17 +134,33 @@ class Item {
 	}
 	
 	/**
+	 * @deprecated See getCategory()
 	 * @return string
 	 */
 	public function getVariation() {
-		return $this->variation;
+		return $this->getCategory();
 	}
 	
 	/**
+	 * @deprecated See setCategory()
 	 * @param string $variation
 	 */
 	public function setVariation($variation) {
-		$this->variation = $variation;
+		$this->setCategory($variation);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCategory() {
+		return $this->category;
+	}
+	
+	/**
+	 * @param string $category
+	 */
+	public function setCategory($category) {
+		$this->category = $category;
 	}
 	
 	/**
