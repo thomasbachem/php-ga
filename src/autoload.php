@@ -8,10 +8,10 @@ spl_autoload_register(function($className) {
 	// Leave if class should not be handled by this autoloader
 	if(strpos($className, 'UnitedPrototype\\GoogleAnalytics') !== 0) return;
 	
-	$classPath = strtr(substr($className, strlen('UnitedPrototype')), '\\', '/') . '.php';
+	$classPath = strtr($className, '\\', '/') . '.php';
 	
 	if(file_exists(__DIR__ . $classPath)) {
-		require(__DIR__ . $classPath);
+	     require(__DIR__ . '/' . $classPath);
 	}
 });
 
