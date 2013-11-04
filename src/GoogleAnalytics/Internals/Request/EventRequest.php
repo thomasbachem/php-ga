@@ -88,7 +88,7 @@ class EventRequest extends Request {
 			$p->utmni = 1;
 		}
 
-		if($this->page) {
+		if(isset($this->page)) {
 			$p->utmp  = $this->page->getPath();
 			$p->utmdt = $this->page->getTitle();
 			if($this->page->getCharset() !== null) {
