@@ -122,7 +122,7 @@ class Page {
 	}
 	
 	/**
-	 * @param string $charset
+	 * @param string $encoding
 	 */
 	public function setCharset($encoding) {
 		$this->charset = $encoding;
