@@ -120,7 +120,9 @@ abstract class HttpRequest {
 		// Recent versions of ga.js use HTTP POST requests if the query string is too long
 		$usePost = strlen($queryString) > 2036;
 		
-		if(!$usePost) {
+                if ($this->config->getUseProxy())
+			$r = 'GET http://'. $this->config->getEndpointHost() . $this->config->getEndpointPath() . '?' . $queryString . ' HTTP/1.0' . "\r\n";
+		else if(!$usePost) {
 			$r = 'GET ' . $this->config->getEndpointPath() . '?' . $queryString . ' HTTP/1.0' . "\r\n";
 		} else {
 			// FIXME: The "/p" shouldn't be hardcoded here, instead we need a GET and a POST endpoint...
@@ -180,8 +182,12 @@ abstract class HttpRequest {
 		if($this->config->getEndpointHost() !== null) {
 			$timeout = $this->config->getRequestTimeout();
 			
-			$socket = fsockopen($this->config->getEndpointHost(), 80, $errno, $errstr, $timeout);
-			if(!$socket) return false;
+                        if ($this->config->getUseProxy())
+                            $socket = fsockopen($this->config->getProxyIp(), $this->config->getProxyPort(), $errno, $errstr, $timeout);
+                        else
+                            $socket = fsockopen($this->config->getEndpointHost(), 80, $errno, $errstr, $timeout);
+
+                        if(!$socket) return false;
 			
 			if($this->config->getFireAndForget()) {
 				stream_set_blocking($socket, false);
