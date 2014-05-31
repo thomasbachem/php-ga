@@ -42,6 +42,11 @@ class EventRequest extends Request {
 	
 	
 	/**
+	 * @var \UnitedPrototype\GoogleAnalytics\Page
+	 */
+	private $page;
+	
+	/**
 	 * @const int
 	 */
 	const X10_EVENT_PROJECT_ID = 5;
