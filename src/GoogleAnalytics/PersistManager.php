@@ -56,8 +56,8 @@ class PersistManager
     {
         global $_SESSION;
         $this->_session = null;
-        if (isset($_SESSION['session'])) {
-            $this->_session = unserialize($_SESSION['session']);
+        if (isset($_SESSION['GA_session'])) {
+            $this->_session = unserialize($_SESSION['GA_session']);
         }
         if ($this->_session === null || get_class($this->_session) !== 'UnitedPrototype\GoogleAnalytics\Session') {
             $this->_session = new Session();
@@ -74,13 +74,14 @@ class PersistManager
     {
         global $_SESSION;
         $this->_visitor = null;
-        if (isset($_SESSION['visitor'])) {
-            $this->_visitor = unserialize($_SESSION['visitor']);
+        if (isset($_SESSION['GA_visitor'])) {
+            $this->_visitor = unserialize($_SESSION['GA_visitor']);
         }
         if ($this->_visitor === null && get_class($this->_visitor) !== 'UnitedPrototype\GoogleAnalytics\Visitor') {
             $this->_visitor = new Visitor();
             $this->_visitor->fromServerVar($_SERVER);
         }
+        $this->_visitor->setPreviousVisitTime($this->_visitor->getCurrentVisitTime());
         $this->_visitor->setCurrentVisitTime(new DateTime());
         return $this->_visitor;
     }
@@ -91,7 +92,7 @@ class PersistManager
     public function store ()
     {
         global $_SESSION;
-        $_SESSION['visitor'] = serialize($this->getVisitor());
-        $_SESSION['session'] = serialize($this->getSession());
+        $_SESSION['GA_visitor'] = serialize($this->getVisitor());
+        $_SESSION['GA_session'] = serialize($this->getSession());
     }
 }
