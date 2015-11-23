@@ -251,13 +251,11 @@ class Campaign {
 	}
 	
 	/**
-	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignTracker.as#153
+	 * @link http://code.google.com/p/gaforflash/source/browse/trunk/src/com/google/analytics/campaign/CampaignTracker.as#166
 	 */
 	public function validate() {
-		// NOTE: gaforflash states that id and gClickId must also be specified,
-		// but that doesn't seem to be correct
-		if(!$this->source) {
-			Tracker::_raiseError('Campaigns need to have at least the "source" attribute defined.', __METHOD__);
+		if(!($this->source || $this->id || $this->gClickId)) {
+			Tracker::_raiseError('Campaigns need to have at least the one of the following attributes defined: "source", "id", "gClickId".', __METHOD__);
 		}
 	}
 	
