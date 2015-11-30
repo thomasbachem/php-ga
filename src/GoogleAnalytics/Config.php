@@ -62,6 +62,14 @@ class Config {
 	 */
 	const ERROR_SEVERITY_EXCEPTIONS = 2;
 	
+        
+	/**
+	 * If you need to use a proxy server to make request set to ture
+	 * 
+	 * @var bool
+	 */
+        protected $useProxy = false;
+        
 	/**
 	 * Whether to just queue all requests on HttpRequest::fire() and actually send
 	 * them on PHP script shutdown after all other tasks are done.
@@ -289,6 +297,44 @@ class Config {
 		
 		$this->sitespeedSampleRate = (int)$sitespeedSampleRate;
 	}
+
+        
+	/**
+	 * @param string $ip
+         * @param int $port
+	 */
+        public function setProxy ($ip, $port)
+            {
+            $this->proxy = $ip;
+            $this->port = $port;
+            $this->useProxy = true;
+            }
+            
+	/**
+	 * @return bool
+	 */
+        public function getUseProxy ()
+            {
+            return $this->useProxy;
+            }
+            
+            
+	/**
+	 * @return string
+	 */
+        public function getProxyIp ()
+            {
+            return $this->proxy;
+            }
+
+	/**
+	 * @return int
+	 */            
+        public function getProxyPort ()
+            {
+            return $this->port;
+            }
+        
 
 }
 
