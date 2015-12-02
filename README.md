@@ -2,7 +2,7 @@ Server-Side Google Analytics Client
 ===========================================================================================
 
 **Oct 5, 2013:** php-ga was ported from [Google Code](https://code.google.com/p/php-ga/)
-where it has 8,000+ downloads and 160+ stares.
+where it has 8,000+ downloads and 160+ stars.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 **NOTE:** php-ga is no longer maintained as Google finally released an official server-side
@@ -29,7 +29,7 @@ Javascript library implementation.
 
 It's PHP, but porting it to other languages (see below for a Python port) should be easy.
 Building this library involved weeks of documentation reading, googling and testing -
-therefore its source code is thorougly well-documented.
+therefore its source code is thoroughly well-documented.
 
 The PHP client has nothing todo with the
 [Data Export](http://code.google.com/apis/analytics/docs/gdata/gdataDeveloperGuide.html)
@@ -41,7 +41,7 @@ Requirements
 -------------------------------------------------------------------------------------------
 
 Requires PHP 5.3+ as namespaces and closures are used. Has no other dependencies and can be
-used independantly from any framework or whatsoever environment.
+used independently from any framework or whatsoever environment.
 
 
 Supported Features
@@ -65,7 +65,7 @@ Gotchas
 - **100% namespaced OOP**
   As a matter of course.
 
-- **Completely abstracted from any enviroment**
+- **Completely abstracted from any environment**
   Doesn't rely on any globals like $_SERVER, PHP sessions or whatsoever - implement it the
   way you want.
 
@@ -81,7 +81,7 @@ Caveats
 -------------------------------------------------------------------------------------------
 
 - **Google Analytics' geo location functionalities won't work**
-  Native geo location features like the worldmap view won't work anymore as they rely
+  Native geo location features like the worldmap view won't work any more as they rely
   solely on the IP address of the GA client - which will always be the one of your
   server(s) when using this library.
 
