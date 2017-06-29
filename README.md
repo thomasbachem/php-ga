@@ -2,7 +2,7 @@ Server-Side Google Analytics Client
 ===========================================================================================
 
 **Oct 5, 2013:** php-ga was ported from [Google Code](https://code.google.com/p/php-ga/)
-where it has 8,000+ downloads and 160+ stares.
+where it has 8,000+ downloads and 160+ stars.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 **NOTE:** php-ga is no longer maintained as Google finally released an official server-side
