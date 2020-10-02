@@ -1,0 +1,9 @@
+{
+    "name": "thomasbachem/php-ga",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "UnitedPrototype\\":"src/"
+        }
+    }
+}
